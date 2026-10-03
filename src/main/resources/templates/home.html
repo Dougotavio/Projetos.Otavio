@@ -7,19 +7,20 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
+<main class="pagina-inicial">
 
-	<section class="hero">
-		<h1>Seis artes marciais,<br>seis formas de entender o combate</h1>
-		<p class="subtitulo">
-			Historia, pontos fortes e pontos fracos de cada arte, lado a lado,
-			para quem quer escolher com criterio em vez de escolher pela moda.
-		</p>
-		<a class="botao" th:href="@{/artes}">Ver as artes</a>
-		<a class="botao botao-secundario" th:href="@{/recomendacao}">Encontrar minha arte</a>
+	<section class="inicio-hero">
+		<img class="inicio-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="" fetchpriority="high">
+		<div class="inicio-hero-conteudo">
+			<p class="inicio-etiqueta">Artes marciais</p>
+			<h1>Mais que lutas,<br>um estilo de vida</h1>
+			<p>Tradição, disciplina e superação em cada treino.<br>
+				Conheça as principais artes marciais e seus países de origem.</p>
+			<a class="inicio-botao" th:href="@{/artes}">Conheça as modalidades <span aria-hidden="true">›</span></a>
+		</div>
 	</section>
 
-	<section class="numeros">
+	<section class="numeros inicio-numeros">
 		<div class="numero">
 			<strong th:text="${total}">6</strong>
 			<span>artes analisadas</span>
@@ -34,7 +35,67 @@
 		</div>
 	</section>
 
-	<section class="inspiracao">
+	<section class="inicio-artes" aria-label="Modalidades">
+		<div class="inicio-artes-grade">
+			<article class="inicio-arte" th:each="arte : ${artes}"
+				th:classappend="${arte.slug == 'boxe'} ? ' inicio-card-1' : (${arte.slug == 'muay-thai'} ? ' inicio-card-2' : (${arte.slug == 'karate'} ? ' inicio-card-3' : (${arte.slug == 'taekwondo'} ? ' inicio-card-4' : (${arte.slug == 'jiu-jitsu'} ? ' inicio-card-5' : ' inicio-card-6'))))">
+				<a class="inicio-arte-imagem" th:href="@{'/artes/' + ${arte.slug}}"
+					th:classappend="' inicio-imagem-' + ${arte.slug}">
+					<img th:src="@{'/images/home/' + ${arte.slug} + '.jpg'}"
+						th:alt="'Praticantes de ' + ${arte.nome}" loading="lazy" decoding="async">
+				</a>
+				<h2 th:text="${arte.nome}">Boxe</h2>
+				<p class="inicio-arte-resumo" th:text="${arte.resumo}">Resumo da modalidade.</p>
+				<p class="origem origem-com-bandeira">
+					<svg class="bandeira" aria-hidden="true" focusable="false" th:switch="${arte.slug}">
+						<use th:case="'judo'" th:href="@{/bandeiras.svg#japao}"></use>
+						<use th:case="'karate'" th:href="@{/bandeiras.svg#japao}"></use>
+						<use th:case="'taekwondo'" th:href="@{/bandeiras.svg#coreia-do-sul}"></use>
+						<use th:case="'jiu-jitsu'" th:href="@{/bandeiras.svg#brasil}"></use>
+						<use th:case="'muay-thai'" th:href="@{/bandeiras.svg#tailandia}"></use>
+						<use th:case="'boxe'" th:href="@{/bandeiras.svg#inglaterra}"></use>
+					</svg>
+					<span th:text="${arte.origem}">Inglaterra</span>
+				</p>
+				<a class="inicio-arte-link" th:href="@{'/artes/' + ${arte.slug}}">Conheça <span th:text="${arte.nome}">a arte</span> <span aria-hidden="true">→</span></a>
+			</article>
+		</div>
+	</section>
+
+	<section class="inicio-valores">
+		<div class="inicio-valor">
+			<span aria-hidden="true">鳥居</span><h2>Tradição</h2>
+			<p>Séculos de história e cultura em cada arte marcial.</p>
+		</div>
+		<div class="inicio-valor">
+			<span aria-hidden="true">拳</span><h2>Disciplina</h2>
+			<p>Mais foco dentro e fora do tatame.</p>
+		</div>
+		<div class="inicio-valor">
+			<span aria-hidden="true">✥</span><h2>Saúde</h2>
+			<p>Movimento, condicionamento e bem-estar no seu ritmo.</p>
+		</div>
+		<div class="inicio-valor">
+			<span aria-hidden="true">♧</span><h2>Respeito</h2>
+			<p>Pelo próximo, pela prática e pela tradição.</p>
+		</div>
+		<div class="inicio-valor">
+			<span aria-hidden="true">↗</span><h2>Evolução</h2>
+			<p>Pequenos passos podem trazer grandes conquistas.</p>
+		</div>
+	</section>
+
+	<section class="inicio-chamada">
+		<div>
+			<p class="inicio-etiqueta">Sua jornada começa aqui</p>
+			<h2>Qual é a sua próxima luta?</h2>
+			<p>Escolha a modalidade que mais combina com você e descubra novas possibilidades.</p>
+		</div>
+		<a class="inicio-botao" th:href="@{/recomendacao}">Encontre sua arte <span aria-hidden="true">›</span></a>
+	</section>
+
+	<div class="inicio-conteudo">
+			<section class="inspiracao">
 		<h2 class="secao-titulo">Por que praticar uma arte marcial?</h2>
 		<p class="subtitulo inspiracao-intro">
 			Cada pessoa começa por um motivo. Com orientação adequada e constância,
@@ -152,34 +213,7 @@
 		</section>
 	</section>
 
-	<section>
-		<h2 class="secao-titulo">As artes do catálogo</h2>
-		<div class="grade">
-			<article class="cartao" th:each="arte : ${artes}"
-				th:classappend="${arte.slug == 'muay-thai'} ? ' cartao-thailandia' : (${arte.slug == 'jiu-jitsu'} ? ' cartao-brasil' : ((${arte.slug == 'judo' or arte.slug == 'karate'}) ? ' cartao-japao' : (${arte.slug == 'taekwondo'} ? ' cartao-coreia' : (${arte.slug == 'boxe'} ? ' cartao-inglaterra' : ''))))">
-				<div class="cartao-topo">
-					<span class="icone-arte" role="img" th:aria-label="'Simbolo de ' + ${arte.nome}"
-						th:text="${arte.icone}">🥋</span>
-					<span class="selo" th:text="${arte.disciplina.rotulo}">Striking</span>
-					<span class="ano" th:text="${arte.anoFormatado()}">1882 d.C.</span>
-				</div>
-				<h3 th:text="${arte.nome}">Judo</h3>
-				<p class="origem origem-com-bandeira">
-					<svg class="bandeira" aria-hidden="true" focusable="false" th:switch="${arte.slug}">
-						<use th:case="'judo'" th:href="@{/bandeiras.svg#japao}"></use>
-						<use th:case="'karate'" th:href="@{/bandeiras.svg#japao}"></use>
-						<use th:case="'taekwondo'" th:href="@{/bandeiras.svg#coreia-do-sul}"></use>
-						<use th:case="'jiu-jitsu'" th:href="@{/bandeiras.svg#brasil}"></use>
-						<use th:case="'muay-thai'" th:href="@{/bandeiras.svg#tailandia}"></use>
-						<use th:case="'boxe'" th:href="@{/bandeiras.svg#inglaterra}"></use>
-					</svg>
-					<span th:text="${arte.origem}">Japao</span>
-				</p>
-				<p th:text="${arte.resumo}">Resumo da arte.</p>
-				<a class="link-mais" th:href="@{'/artes/' + ${arte.slug}}">Ler a analise completa &rarr;</a>
-			</article>
-		</div>
-	</section>
+	</div>
 
 </main>
 

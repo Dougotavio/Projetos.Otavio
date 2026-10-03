@@ -20,7 +20,8 @@ public class RecomendacaoService {
 	private static final Set<String> OBJETIVOS = Set.of(
 			"DEFESA_PESSOAL", "CONDICIONAMENTO", "DISCIPLINA", "COMPETICAO");
 	private static final Set<String> PREFERENCIAS = Set.of(
-			"CHUTES", "GOLPES_VARIADOS", "PROJECOES", "LUTA_NO_SOLO", "SEM_PREFERENCIA");
+			"CHUTES", "GOLPES_VARIADOS", "ATAQUE_AGRESSIVO", "DEFESA_CONTROLE",
+			"PROJECOES", "LUTA_NO_SOLO", "SEM_PREFERENCIA");
 	private static final Set<String> EXPERIENCIAS = Set.of(
 			"INICIANTE", "INTERMEDIARIO", "AVANCADO");
 	private static final Set<String> CONTATOS = Set.of(
@@ -62,6 +63,8 @@ public class RecomendacaoService {
 		switch (perfil.getPreferencia()) {
 		case "CHUTES" -> adicionar(pontos, "taekwondo", 5);
 		case "GOLPES_VARIADOS" -> adicionar(pontos, "muay-thai", 5);
+		case "ATAQUE_AGRESSIVO" -> adicionar(pontos, "muay-thai", 5);
+		case "DEFESA_CONTROLE" -> adicionar(pontos, "jiu-jitsu", 5);
 		case "PROJECOES" -> adicionar(pontos, "judo", 5);
 		case "LUTA_NO_SOLO" -> adicionar(pontos, "jiu-jitsu", 5);
 		default -> {

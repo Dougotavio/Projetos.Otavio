@@ -7,16 +7,19 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
+<main class="container portal-page portal-sobre">
 
-	<section class="cabecalho-pagina">
-		<h1>Sobre o site</h1>
-		<p class="subtitulo">
-			Um catalogo comparativo de <strong th:text="${total}">6</strong> artes marciais.
-		</p>
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Nossa proposta</p>
+			<h1>Sobre o site</h1>
+			<p>Um catálogo comparativo de <strong th:text="${total}">6</strong> artes marciais, criado para ajudar você a escolher com mais contexto.</p>
+			<a class="portal-botao" th:href="@{/artes}">Conheça as artes <span aria-hidden="true">›</span></a>
+		</div>
 	</section>
 
-	<section class="bloco">
+	<section class="bloco portal-info-card">
 		<h2 class="secao-titulo">Por que comparar?</h2>
 		<p class="texto">
 			Toda arte marcial e boa em alguma coisa e ruim em outra. O judo derruba
@@ -27,7 +30,7 @@
 		</p>
 	</section>
 
-	<section class="bloco">
+	<section class="bloco portal-info-card">
 		<h2 class="secao-titulo">O que voce encontra aqui</h2>
 		<ul class="lista">
 			<li>Historia de cada arte, com origem, fundacao e difusao.</li>
@@ -37,7 +40,7 @@
 		</ul>
 	</section>
 
-	<section class="bloco">
+	<section class="bloco portal-info-card">
 		<h2 class="secao-titulo">Tecnologia</h2>
 		<p class="texto">
 			Site feito com Spring Boot 4 e Thymeleaf, servindo paginas HTML geradas

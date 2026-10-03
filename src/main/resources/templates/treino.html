@@ -7,10 +7,34 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container pagina-treino">
-	<a class="voltar" th:href="@{'/artes/' + ${arte.slug}}">&larr; Voltar para <span th:text="${arte.nome}">a arte</span></a>
+<main class="container pagina-treino"
+	th:with="treinoComVisual=${arte.slug == 'muay-thai' or arte.slug == 'jiu-jitsu' or arte.slug == 'boxe' or arte.slug == 'judo' or arte.slug == 'taekwondo' or arte.slug == 'karate'},
+		treinoImagemBase=${arte.slug == 'muay-thai' ? '/images/muay-thai/' : '/images/referencia/' + arte.slug + '/'}"
+	th:classappend="${treinoComVisual} ? ' treino-com-visual treino-' + arte.slug : ''">
+	<a class="voltar" th:href="@{'/artes/' + ${arte.slug}}"
+		th:unless="${treinoComVisual}">&larr; Voltar para <span th:text="${arte.nome}">a arte</span></a>
 
-	<section class="cabecalho-pagina cabecalho-treino">
+	<section class="treino-hero" th:if="${treinoComVisual}">
+		<img class="treino-hero-imagem" th:src="${treinoImagemBase + 'hero.jpg'}"
+			th:alt="'Imagem de ' + ${arte.nome} + ' para o roteiro de treino'">
+		<div class="treino-hero-conteudo">
+			<a class="treino-voltar" th:href="@{'/artes/' + ${arte.slug}}"
+				th:text="'← Voltar para ' + ${arte.nome}">← Voltar para a modalidade</a>
+			<p class="treino-etiqueta">Roteiro introdutório · prática consciente</p>
+			<h1>Treino de <span th:text="${arte.nome}">Judo</span></h1>
+			<h2 th:switch="${arte.slug}">
+				<th:block th:case="'jiu-jitsu'">Técnica, estratégia<br><em>e controle</em></th:block>
+				<th:block th:case="'boxe'">Disciplina hoje,<br><em>evolução a cada treino</em></th:block>
+				<th:block th:case="'judo'">Equilíbrio e técnica<br><em>com segurança</em></th:block>
+				<th:block th:case="'taekwondo'">Mobilidade, técnica<br><em>e superação</em></th:block>
+				<th:block th:case="'karate'">Disciplina, equilíbrio<br><em>e precisão</em></th:block>
+				<th:block th:case="'muay-thai'">Fundamentos e controle<br><em>no seu ritmo</em></th:block>
+			</h2>
+			<p>Uma estrutura inicial para conversar com seu instrutor e adaptar ao seu nível, condição física e objetivos.</p>
+		</div>
+	</section>
+
+	<section class="cabecalho-pagina cabecalho-treino" th:unless="${treinoComVisual}">
 		<span class="icone-arte icone-arte-grande" role="img"
 			th:aria-label="'Simbolo de ' + ${arte.nome}" th:text="${arte.icone}">🥋</span>
 		<span class="selo">Roteiro introdutorio</span>
@@ -22,7 +46,25 @@
 		<strong>Seguranca primeiro:</strong> este roteiro e apenas educativo, nao substitui aulas presenciais nem a orientacao de um profissional qualificado. Comece com intensidade leve, use o equipamento adequado e interrompa se sentir dor, tontura ou mal-estar. Nao pratique quedas, golpes, estrangulamentos ou chaves sem supervisao.
 	</aside>
 
-	<section class="bloco">
+	<section class="treino-galeria" th:if="${treinoComVisual}">
+		<figure>
+			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'tecnica.jpg' : treinoImagemBase + 'aula-1.jpg'}"
+				th:alt="'Fundamentos de ' + ${arte.nome}" loading="lazy">
+			<figcaption>Fundamentos</figcaption>
+		</figure>
+		<figure>
+			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'sparring.jpg' : treinoImagemBase + 'aula-2.jpg'}"
+				th:alt="'Prática técnica de ' + ${arte.nome}" loading="lazy">
+			<figcaption>Técnica</figcaption>
+		</figure>
+		<figure>
+			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'condicionamento.jpg' : treinoImagemBase + 'aula-3.jpg'}"
+				th:alt="'Treino guiado de ' + ${arte.nome}" loading="lazy">
+			<figcaption>Prática guiada</figcaption>
+		</figure>
+	</section>
+
+	<section class="bloco secao-treino">
 		<h2 class="secao-titulo">Estrutura sugerida para uma aula</h2>
 		<div class="grade grade-etapas-treino">
 			<article class="cartao etapa-treino">
@@ -48,7 +90,7 @@
 		</div>
 	</section>
 
-	<section class="bloco">
+	<section class="bloco secao-treino">
 		<h2 class="secao-titulo">Foco especifico: <span th:text="${arte.nome}">Judo</span></h2>
 		<div class="painel treino-especifico" th:switch="${arte.slug}">
 			<div th:case="'judo'">
@@ -102,7 +144,7 @@
 		</div>
 	</section>
 
-	<section class="duas-colunas bloco">
+	<section class="duas-colunas bloco secao-treino">
 		<article class="painel">
 			<h2>Frequencia inicial</h2>
 			<p>Converse com o instrutor sobre comecar com uma ou duas aulas por semana e dias de recuperacao entre elas. A frequencia adequada depende da sua saude, experiencia e resposta ao treino.</p>
@@ -113,7 +155,7 @@
 		</article>
 	</section>
 
-	<section class="bloco">
+	<section class="bloco secao-treino">
 		<div class="chips">
 			<a class="chip" th:href="@{'/artes/' + ${arte.slug}}">Voltar ao catalogo de <span th:text="${arte.nome}">Judo</span></a>
 			<a class="chip" th:href="@{/recomendacao}">Encontrar minha arte</a>

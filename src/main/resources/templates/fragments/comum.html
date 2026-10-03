@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title th:text="${titulo} + ' | Artes Marciais'">Artes Marciais</title>
-	<link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+	<link rel="icon" type="image/png" sizes="128x128" th:href="@{/images/logo.png}">
+	<link rel="apple-touch-icon" th:href="@{/images/logo.png}">
 	<link rel="stylesheet" th:href="@{/css/estilo.css}">
 </head>
 
@@ -14,13 +15,14 @@
 <header th:fragment="cabecalho" class="cabecalho">
 	<div class="container">
 		<a class="marca" th:href="@{/}">
-			<img class="marca-icone" th:src="@{/favicon.svg}" alt="">
+			<img class="marca-icone" th:src="@{/images/logo.png}" alt="Logo Artes Marciais">
 			<span>Artes<strong>Marciais</strong></span>
 		</a>
 		<nav>
 			<a th:href="@{/}">Inicio</a>
 			<a th:href="@{/artes}">Artes</a>
 			<a th:href="@{/recomendacao}">Encontre sua arte</a>
+			<a th:href="@{/roupas}">Roupas</a>
 			<a th:href="@{/lojas}">Equipamentos</a>
 			<a th:href="@{/comparativo}">Comparativo</a>
 			<a th:href="@{/sobre}">Sobre</a>

@@ -7,17 +7,18 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
-	<section class="cabecalho-pagina">
-		<span class="selo">Questionario personalizado</span>
-		<h1>Encontre uma arte para experimentar</h1>
-		<p class="subtitulo">
-			Conte um pouco sobre seus objetivos e preferencias para ver uma sugestao
-			explicada, com outras opcoes para comparar.
-		</p>
+<main class="container portal-page portal-recomendacao">
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Questionário personalizado</p>
+			<h1>Encontre uma arte para experimentar</h1>
+			<p>Conte um pouco sobre seus objetivos e preferências para receber uma sugestão explicada, com outras opções para comparar.</p>
+			<a class="portal-botao" href="#formulario-recomendacao">Comece o questionário <span aria-hidden="true">›</span></a>
+		</div>
 	</section>
 
-	<form class="formulario-recomendacao" th:action="@{/recomendacao}" th:object="${perfil}" method="post">
+	<form id="formulario-recomendacao" class="formulario-recomendacao" th:action="@{/recomendacao}" th:object="${perfil}" method="post">
 		<section class="bloco">
 			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">◎</span> Sobre voce</h2>
 			<div class="campos-grade">

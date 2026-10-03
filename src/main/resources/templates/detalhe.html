@@ -8,9 +8,10 @@
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
 <main class="container pagina-detalhe"
-	th:classappend="${arte.slug == 'muay-thai'} ? ' pagina-muay-thai' : (${arte.slug == 'jiu-jitsu'} ? ' pagina-jiu-jitsu' : (${arte.slug == 'judo' or arte.slug == 'karate'} ? ' pagina-japao' : (${arte.slug == 'taekwondo'} ? ' pagina-coreia' : (${arte.slug == 'boxe'} ? ' pagina-inglaterra' : ''))))">
+	th:classappend="${arte.slug == 'muay-thai'} ? ' pagina-muay-thai detalhe-muay-thai' : (${arte.slug == 'jiu-jitsu'} ? ' pagina-referencia pagina-jiu-jitsu' : (${arte.slug == 'boxe'} ? ' pagina-referencia pagina-boxe' : (${arte.slug == 'judo'} ? ' pagina-referencia pagina-japao' : (${arte.slug == 'taekwondo'} ? ' pagina-referencia pagina-coreia' : (${arte.slug == 'karate'} ? ' pagina-referencia pagina-japao pagina-karate' : '')))))">
 
-	<div class="video-fundo-modalidade" aria-hidden="true">
+	<div class="video-fundo-modalidade" aria-hidden="true"
+		th:unless="${arte.slug == 'muay-thai' or arte.slug == 'jiu-jitsu' or arte.slug == 'boxe' or arte.slug == 'judo' or arte.slug == 'taekwondo' or arte.slug == 'karate'}">
 		<iframe
 			th:src="|https://www.youtube-nocookie.com/embed/${arte.videoId}?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=${arte.videoId}&amp;playsinline=1&amp;rel=0|"
 			th:title="'Video de fundo de ' + ${arte.nome}"
@@ -20,8 +21,318 @@
 		</iframe>
 	</div>
 
-	<a class="voltar" th:href="@{/artes}">&larr; Voltar para todas as artes</a>
+	<a class="voltar" th:href="@{/artes}"
+		th:unless="${arte.slug == 'muay-thai' or arte.slug == 'jiu-jitsu' or arte.slug == 'boxe' or arte.slug == 'judo' or arte.slug == 'taekwondo' or arte.slug == 'karate'}">&larr; Voltar para todas as artes</a>
 
+	<section class="muay-hero" th:if="${arte.slug == 'muay-thai'}">
+		<img class="muay-hero-imagem" th:src="@{/images/muay-thai/hero.jpg}"
+			alt="Praticante de Muay Thai em guarda diante da bandeira da Tailândia">
+		<div class="muay-hero-conteudo">
+			<a class="muay-voltar" th:href="@{/artes}">&larr; Todas as artes</a>
+			<p class="muay-eyebrow">Tradição tailandesa</p>
+			<h1 th:text="${arte.nome}">Muay Thai</h1>
+			<h2>Mais que um esporte,<br><em>um estilo de vida</em></h2>
+			<p class="muay-hero-resumo" th:text="${arte.resumo}">Resumo do Muay Thai.</p>
+			<div class="muay-acoes">
+				<a class="muay-botao" href="#muay-aulas">Conheça a modalidade <span aria-hidden="true">›</span></a>
+				<a class="muay-botao muay-botao-secundario" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Ver roteiro de treino</a>
+			</div>
+		</div>
+		<div class="muay-hero-listras" aria-hidden="true"></div>
+	</section>
+
+	<div class="muay-conteudo" th:if="${arte.slug == 'muay-thai'}">
+		<section id="muay-sobre" class="muay-sobre">
+			<figure class="muay-sobre-imagem">
+				<img th:src="@{/images/muay-thai/tradicao.jpg}"
+					alt="Praticante de Muay Thai em gesto de respeito e concentração">
+			</figure>
+			<div class="muay-sobre-texto">
+				<p class="muay-eyebrow">Sobre o Muay Thai</p>
+				<h2>Tradição tailandesa como base, resultados na sua vida</h2>
+				<p th:text="${arte.historia}">História do Muay Thai.</p>
+				<a class="muay-link" href="#muay-beneficios">Descubra os benefícios <span aria-hidden="true">→</span></a>
+			</div>
+			<figure class="muay-sobre-templo">
+				<img th:src="@{/images/muay-thai/templo.jpg}" alt="Templo tailandês e guardião tradicional">
+			</figure>
+		</section>
+
+		<section id="muay-beneficios" class="muay-beneficios">
+			<div class="muay-beneficios-intro">
+				<p class="muay-eyebrow">Benefícios</p>
+				<h2>Uma prática completa para o corpo e a mente</h2>
+				<p>Com orientação adequada e respeito aos seus limites, o treino pode desenvolver:</p>
+			</div>
+			<div class="muay-beneficios-grade">
+				<article class="muay-beneficio">
+					<span aria-hidden="true">↗</span>
+					<h3>Força e coordenação</h3>
+					<p>Movimentos que trabalham equilíbrio, postura e coordenação corporal.</p>
+				</article>
+				<article class="muay-beneficio">
+					<span aria-hidden="true">♡</span>
+					<h3>Condicionamento</h3>
+					<p>Exercícios adaptáveis ajudam a construir resistência no seu ritmo.</p>
+				</article>
+				<article class="muay-beneficio">
+					<span aria-hidden="true">◎</span>
+					<h3>Disciplina</h3>
+					<p>A repetição dos fundamentos incentiva foco e constância.</p>
+				</article>
+				<article class="muay-beneficio">
+					<span aria-hidden="true">◇</span>
+					<h3>Autoconfiança</h3>
+					<p>Aprender novas habilidades pode fortalecer a confiança na própria evolução.</p>
+				</article>
+				<article class="muay-beneficio">
+					<span aria-hidden="true">⌖</span>
+					<h3>Equilíbrio</h3>
+					<p>Base, deslocamento e controle do corpo fazem parte da técnica.</p>
+				</article>
+				<article class="muay-beneficio">
+					<span aria-hidden="true">♧</span>
+					<h3>Convivência</h3>
+					<p>Uma turma acolhedora ajuda a treinar com respeito e apoio mútuo.</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="muay-aulas" class="muay-aulas">
+			<div class="muay-aulas-intro">
+				<p class="muay-eyebrow">Nossas aulas</p>
+				<h2>Treinos para todos os níveis</h2>
+				<p>Do iniciante ao avançado, procure uma turma com acompanhamento qualificado,
+					progressão segura e espaço para aprender no seu ritmo.</p>
+				<a class="muay-botao" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Conheça o roteiro de treino <span aria-hidden="true">›</span></a>
+			</div>
+			<div class="muay-aulas-grade">
+				<article class="muay-aula">
+					<img th:src="@{/images/muay-thai/tecnica.jpg}" alt="Prática de técnica de Muay Thai no ringue" loading="lazy">
+					<div><h3>Técnica</h3><p>Aprenda os fundamentos com atenção à postura e à segurança.</p></div>
+				</article>
+				<article class="muay-aula">
+					<img th:src="@{/images/muay-thai/sparring.jpg}" alt="Dois praticantes treinando no ringue" loading="lazy">
+					<div><h3>Sparring</h3><p>Prática opcional e progressiva, com supervisão e proteção adequadas.</p></div>
+				</article>
+				<article class="muay-aula">
+					<img th:src="@{/images/muay-thai/condicionamento.jpg}" alt="Praticante treinando golpes em um saco de pancadas" loading="lazy">
+					<div><h3>Condicionamento</h3><p>Exercícios para desenvolver resistência e familiaridade com os movimentos.</p></div>
+				</article>
+				<article class="muay-aula">
+					<img th:src="@{/images/muay-thai/preparacao.jpg}" alt="Praticante se preparando para treinar no ringue" loading="lazy">
+					<div><h3>Preparação física</h3><p>Atividades graduais, ajustadas ao seu preparo e aos objetivos da aula.</p></div>
+				</article>
+			</div>
+		</section>
+
+		<section class="muay-video">
+			<div>
+				<p class="muay-eyebrow">Em ação</p>
+				<h2>Conheça o Muay Thai</h2>
+				<p>Uma demonstração para conhecer movimentos e dinâmica da modalidade.</p>
+			</div>
+			<div class="video-responsivo">
+				<iframe th:src="|https://www.youtube-nocookie.com/embed/${arte.videoId}|"
+					th:title="'Demonstracao de ' + ${arte.nome}"
+					loading="lazy"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen>
+				</iframe>
+			</div>
+		</section>
+
+		<section class="muay-pontos">
+			<h2>Pontos fortes e aspectos a considerar</h2>
+			<div class="duas-colunas">
+				<div class="painel painel-forte">
+					<h3><span class="icone-secao" aria-hidden="true">✓</span> Pontos fortes</h3>
+					<div class="destaque" th:each="ponto : ${arte.pontosFortes}">
+						<h4 th:text="${ponto.titulo}">Título</h4>
+						<p th:text="${ponto.descricao}">Descrição.</p>
+					</div>
+				</div>
+				<div class="painel painel-fraco">
+					<h3><span class="icone-secao" aria-hidden="true">⚠</span> Aspectos a considerar</h3>
+					<div class="destaque" th:each="ponto : ${arte.pontosFracos}">
+						<h4 th:text="${ponto.titulo}">Título</h4>
+						<p th:text="${ponto.descricao}">Descrição.</p>
+					</div>
+				</div>
+			</div>
+			<p class="muay-nota">Conteúdo educativo: converse com o instrutor sobre experiência, intensidade,
+				equipamentos e adaptações antes de começar.</p>
+		</section>
+
+		<section class="muay-final">
+			<p class="muay-eyebrow">Disciplina · respeito · evolução</p>
+			<h2>Venha conhecer o Muay Thai</h2>
+			<a class="muay-botao" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Comece pelo roteiro introdutório <span aria-hidden="true">›</span></a>
+		</section>
+	</div>
+
+	<div class="referencia-conteudo"
+		th:if="${arte.slug == 'jiu-jitsu' or arte.slug == 'boxe' or arte.slug == 'judo' or arte.slug == 'taekwondo' or arte.slug == 'karate'}">
+		<section class="referencia-hero">
+			<img class="referencia-hero-imagem"
+				th:src="@{'/images/referencia/' + ${arte.slug} + '/hero.jpg'}"
+				th:alt="'Praticantes de ' + ${arte.nome} + ' em treinamento'">
+			<div class="referencia-hero-conteudo">
+				<a class="referencia-voltar" th:href="@{/artes}">&larr; Todas as artes</a>
+				<p class="referencia-etiqueta" th:text="${arte.origem} + ' · ' + ${arte.anoFormatado()}">Origem da modalidade</p>
+				<h1 th:text="${arte.nome}">Arte marcial</h1>
+				<h2 th:switch="${arte.slug}">
+					<th:block th:case="'jiu-jitsu'">Mais que um esporte,<br><em>um estilo de vida</em></th:block>
+					<th:block th:case="'boxe'">Disciplina hoje,<br><em>resultados amanhã</em></th:block>
+					<th:block th:case="'judo'">Tradição que<br><em>forma caráter</em></th:block>
+					<th:block th:case="'taekwondo'">Disciplina, técnica<br><em>e superação.</em></th:block>
+					<th:block th:case="'karate'">Mais que um esporte,<br><em>um estilo de vida</em></th:block>
+				</h2>
+				<p class="referencia-resumo" th:text="${arte.resumo}">Resumo da modalidade.</p>
+				<div class="referencia-acoes">
+					<a class="referencia-botao" href="#referencia-aulas">Conheça a modalidade <span aria-hidden="true">›</span></a>
+					<a class="referencia-botao referencia-botao-secundario"
+						th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Ver roteiro de treino</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="referencia-sobre">
+			<figure class="referencia-sobre-imagem">
+				<img th:src="@{'/images/referencia/' + ${arte.slug} + '/sobre.jpg'}"
+					th:alt="'Equipamento e tradição do ' + ${arte.nome}" loading="lazy">
+			</figure>
+			<div class="referencia-sobre-texto">
+				<p class="referencia-etiqueta" th:text="'Sobre ' + ${arte.nome}">Sobre a modalidade</p>
+				<h2 th:switch="${arte.slug}">
+					<th:block th:case="'jiu-jitsu'">Técnica, estratégia e controle</th:block>
+					<th:block th:case="'boxe'">Tradição, força e respeito</th:block>
+					<th:block th:case="'judo'">Técnica, equilíbrio e superação</th:block>
+					<th:block th:case="'taekwondo'">Tradição coreana, força global</th:block>
+					<th:block th:case="'karate'">Tradição, disciplina e autoconfiança</th:block>
+				</h2>
+				<p th:text="${arte.historia}">História da modalidade.</p>
+				<a class="referencia-link" href="#referencia-beneficios">Descubra os benefícios <span aria-hidden="true">→</span></a>
+			</div>
+		</section>
+
+		<section id="referencia-beneficios" class="referencia-beneficios">
+			<div class="referencia-beneficios-intro">
+				<p class="referencia-etiqueta">Benefícios</p>
+				<h2>Uma prática que desenvolve corpo e mente</h2>
+				<p>Com orientação adequada e respeito aos seus limites, o treino pode ajudar a desenvolver:</p>
+			</div>
+			<div class="referencia-beneficios-grade">
+				<article class="referencia-beneficio"><span aria-hidden="true">◎</span><div><h3>Condicionamento</h3><p>Construa resistência e familiaridade com os movimentos no seu ritmo.</p></div></article>
+				<article class="referencia-beneficio"><span aria-hidden="true">✥</span><div><h3>Disciplina</h3><p>A prática consistente incentiva foco, atenção e constância.</p></div></article>
+				<article class="referencia-beneficio"><span aria-hidden="true">◇</span><div><h3>Autoconfiança</h3><p>Aprender novas habilidades permite perceber sua própria evolução.</p></div></article>
+				<article class="referencia-beneficio"><span aria-hidden="true">↗</span><div><h3>Coordenação</h3><p>Sequências técnicas trabalham postura, tempo e coordenação corporal.</p></div></article>
+				<article class="referencia-beneficio"><span aria-hidden="true">⌖</span><div><h3>Equilíbrio</h3><p>Base, deslocamento e controle corporal são parte do aprendizado.</p></div></article>
+				<article class="referencia-beneficio"><span aria-hidden="true">♡</span><div><h3>Respeito</h3><p>O treino em grupo valoriza parceria, cuidado e respeito mútuo.</p></div></article>
+			</div>
+		</section>
+
+		<section id="referencia-aulas" class="referencia-aulas">
+			<div class="referencia-aulas-intro">
+				<p class="referencia-etiqueta">Nossas aulas</p>
+				<h2>Aprenda no seu ritmo</h2>
+				<p>Do primeiro contato à prática avançada, procure orientação qualificada e uma progressão segura.</p>
+				<a class="referencia-botao" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Conheça o roteiro <span aria-hidden="true">›</span></a>
+			</div>
+			<div class="referencia-aulas-grade">
+				<article class="referencia-aula" th:each="numero : ${#numbers.sequence(1, 3)}">
+					<img th:src="@{'/images/referencia/' + ${arte.slug} + '/aula-' + ${numero} + '.jpg'}"
+						th:alt="'Aula de ' + ${arte.nome} + ', etapa ' + ${numero}" loading="lazy">
+					<div>
+						<h3 th:if="${arte.slug == 'karate' and numero == 1}">Kihon</h3>
+						<h3 th:if="${arte.slug == 'karate' and numero == 2}">Kata</h3>
+						<h3 th:if="${arte.slug == 'karate' and numero == 3}">Kumite</h3>
+						<h3 th:unless="${arte.slug == 'karate'}" th:switch="${numero}">
+							<th:block th:case="1">Fundamentos</th:block>
+							<th:block th:case="2">Técnica</th:block>
+							<th:block th:case="3">Prática guiada</th:block>
+						</h3>
+						<p th:text="'Aprenda ' + ${arte.nome} + ' com acompanhamento e atenção à segurança.'">Conheça os fundamentos da modalidade.</p>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="referencia-video">
+			<div>
+				<p class="referencia-etiqueta">Em ação</p>
+				<h2>Conheça <span th:text="${arte.nome}">a modalidade</span></h2>
+				<p>Veja uma demonstração e conheça os movimentos e a dinâmica da prática.</p>
+			</div>
+			<div class="video-responsivo">
+				<iframe th:src="|https://www.youtube-nocookie.com/embed/${arte.videoId}|"
+					th:title="'Demonstracao de ' + ${arte.nome}" loading="lazy"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen></iframe>
+			</div>
+		</section>
+
+		<section class="referencia-personagem" th:switch="${arte.slug}">
+			<th:block th:case="'jiu-jitsu'">
+				<p class="referencia-etiqueta">Cultura marcial</p><h2>Jiu-Jitsu na ficção</h2>
+				<p>Cosmo Imai, de <em>Kengan Ashura</em>, é um personagem fictício conhecido por usar grappling e técnicas de jiu-jitsu brasileiro.</p>
+			</th:block>
+			<th:block th:case="'boxe'">
+				<p class="referencia-etiqueta">Cultura marcial</p><h2>Boxe na ficção</h2>
+				<p>Little Mac, da série de jogos <em>Punch-Out!!</em>, é um boxeador que enfrenta adversários em torneios fictícios.</p>
+			</th:block>
+			<th:block th:case="'judo'">
+				<p class="referencia-etiqueta">Cultura marcial</p><h2>Judô na ficção</h2>
+				<p>Sanshiro Kurenai, protagonista de <em>Judo Boy</em>, viaja treinando e enfrentando adversários com técnicas de judô.</p>
+			</th:block>
+			<th:block th:case="'taekwondo'">
+				<p class="referencia-etiqueta">Cultura marcial</p><h2>Taekwondo na ficção</h2>
+				<p>Hwoarang, da série <em>Tekken</em>, é um competidor fictício conhecido por suas sequências de chutes de taekwondo.</p>
+			</th:block>
+			<th:block th:case="'karate'">
+				<p class="referencia-etiqueta">Cultura marcial</p><h2>Karate na ficção</h2>
+				<p>Ryu, da série <em>Street Fighter</em>, é um lutador fictício inspirado em tradições de karate.</p>
+			</th:block>
+			<p class="referencia-ficcao-nota">Representações de obras de ficção podem exagerar habilidades e não são um guia para a prática real ou segura.</p>
+		</section>
+
+		<section class="referencia-pontos">
+			<h2>Pontos fortes e aspectos a considerar</h2>
+			<div class="duas-colunas">
+				<div class="painel painel-forte">
+					<h3><span class="icone-secao" aria-hidden="true">✓</span> Pontos fortes</h3>
+					<div class="destaque" th:each="ponto : ${arte.pontosFortes}">
+						<h4 th:text="${ponto.titulo}">Título</h4><p th:text="${ponto.descricao}">Descrição.</p>
+					</div>
+				</div>
+				<div class="painel painel-fraco">
+					<h3><span class="icone-secao" aria-hidden="true">⚠</span> Aspectos a considerar</h3>
+					<div class="destaque" th:each="ponto : ${arte.pontosFracos}">
+						<h4 th:text="${ponto.titulo}">Título</h4><p th:text="${ponto.descricao}">Descrição.</p>
+					</div>
+				</div>
+			</div>
+			<p class="referencia-nota">Converse com o instrutor sobre experiência, intensidade, equipamentos e adaptações antes de começar.</p>
+		</section>
+
+		<section class="referencia-final">
+			<p class="referencia-etiqueta">Disciplina · respeito · evolução</p>
+			<h2>Venha conhecer <span th:text="${arte.nome}">a modalidade</span></h2>
+			<a class="referencia-botao" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Comece pelo roteiro introdutório <span aria-hidden="true">›</span></a>
+		</section>
+
+		<section class="referencia-outras">
+			<h2>Outras artes</h2>
+			<div class="chips">
+				<a class="chip" th:each="outra : ${outras}" th:href="@{'/artes/' + ${outra.slug}}"
+					th:text="${outra.nome}">Outra arte</a>
+			</div>
+		</section>
+	</div>
+
+	<th:block th:unless="${arte.slug == 'muay-thai' or arte.slug == 'jiu-jitsu' or arte.slug == 'boxe' or arte.slug == 'judo' or arte.slug == 'taekwondo' or arte.slug == 'karate'}">
 	<section class="cabecalho-pagina"
 		th:classappend="${arte.slug == 'muay-thai'} ? ' cabecalho-pagina-thailandia' : (${arte.slug == 'jiu-jitsu'} ? ' cabecalho-pagina-brasil' : ((${arte.slug == 'judo' or arte.slug == 'karate'}) ? ' cabecalho-pagina-japao' : (${arte.slug == 'taekwondo'} ? ' cabecalho-pagina-coreia' : (${arte.slug == 'boxe'} ? ' cabecalho-pagina-inglaterra' : ''))))">
 		<span class="icone-arte icone-arte-grande" role="img"
@@ -158,6 +469,7 @@
 				th:text="${outra.nome}">Outra arte</a>
 		</div>
 	</section>
+	</th:block>
 
 </main>
 

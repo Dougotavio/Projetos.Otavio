@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.artes.marciais.demo.repository.MartialArtRepository;
+import com.artes.marciais.demo.repository.VestuarioRepository;
 
 /**
  * Registra a implementacao do repositorio como bean.
@@ -17,5 +18,10 @@ public class RepositoryConfig {
 	@Bean
 	MartialArtRepository martialArtRepository() {
 		return new MartialArtRepository.InMemory();
+	}
+
+	@Bean
+	VestuarioRepository vestuarioRepository() {
+		return new VestuarioRepository.InMemory();
 	}
 }

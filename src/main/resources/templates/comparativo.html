@@ -7,17 +7,19 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
+<main class="container portal-page portal-comparativo">
 
-	<section class="cabecalho-pagina">
-		<h1>Comparativo</h1>
-		<p class="subtitulo">
-			As artes lado a lado. A contagem mostra quantos pontos fortes
-			e quantos pontos fracos cada uma tem no catalogo.
-		</p>
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Compare e descubra</p>
+			<h1>Comparativo</h1>
+			<p>Veja as artes lado a lado. A contagem mostra quantos pontos fortes e fracos cada modalidade tem no catálogo.</p>
+			<a class="portal-botao" href="#tabela-comparativa">Ver comparativo <span aria-hidden="true">›</span></a>
+		</div>
 	</section>
 
-	<div class="tabela-rolagem">
+	<div id="tabela-comparativa" class="tabela-rolagem">
 		<table class="tabela">
 			<thead>
 				<tr>
@@ -32,7 +34,19 @@
 			<tbody>
 				<tr th:each="arte : ${artes}">
 					<td><a th:href="@{'/artes/' + ${arte.slug}}" th:text="${arte.nome}">Judo</a></td>
-					<td th:text="${arte.origem}">Japao</td>
+					<td>
+						<span class="origem-com-bandeira">
+							<svg class="bandeira" aria-hidden="true" focusable="false" th:switch="${arte.slug}">
+								<use th:case="'judo'" th:href="@{/bandeiras.svg#japao}"></use>
+								<use th:case="'karate'" th:href="@{/bandeiras.svg#japao}"></use>
+								<use th:case="'taekwondo'" th:href="@{/bandeiras.svg#coreia-do-sul}"></use>
+								<use th:case="'jiu-jitsu'" th:href="@{/bandeiras.svg#brasil}"></use>
+								<use th:case="'muay-thai'" th:href="@{/bandeiras.svg#tailandia}"></use>
+								<use th:case="'boxe'" th:href="@{/bandeiras.svg#inglaterra}"></use>
+							</svg>
+							<span th:text="${arte.origem}">Japao</span>
+						</span>
+					</td>
 					<td th:text="${arte.anoOrigem}">1882</td>
 					<td th:text="${arte.disciplina.rotulo}">Throwing</td>
 					<td class="num forte" th:text="${arte.pontosFortes.size()}">4</td>
@@ -42,7 +56,7 @@
 		</table>
 	</div>
 
-	<section class="bloco">
+	<section class="bloco portal-info-card">
 		<h2 class="secao-titulo">Disciplinas</h2>
 		<div class="chips">
 			<a class="chip" th:each="d : ${disciplinas}"

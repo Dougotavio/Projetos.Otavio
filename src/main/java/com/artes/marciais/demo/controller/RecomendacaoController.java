@@ -29,6 +29,8 @@ public class RecomendacaoController {
 			new Opcao("SEM_PREFERENCIA", "Ainda nao tenho preferencia"),
 			new Opcao("CHUTES", "Gosto de chutes e movimentacao"),
 			new Opcao("GOLPES_VARIADOS", "Quero combinar punhos, chutes, joelhos e cotovelos"),
+			new Opcao("ATAQUE_AGRESSIVO", "Prefiro tecnicas mais agressivas e diretas"),
+			new Opcao("DEFESA_CONTROLE", "Prefiro evitar confronto, priorizando controle e imobilizacoes"),
 			new Opcao("PROJECOES", "Tenho interesse em projecoes e quedas"),
 			new Opcao("LUTA_NO_SOLO", "Prefiro controle e tecnicas no chao"));
 	private static final List<Opcao> EXPERIENCIAS = List.of(

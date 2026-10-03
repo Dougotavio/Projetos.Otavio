@@ -7,18 +7,31 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
+<main class="container portal-page portal-artes">
 
-	<section class="cabecalho-pagina">
-		<h1 th:text="${disciplina != null} ? ${disciplina.rotulo} : 'Todas as artes'">Todas as artes</h1>
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Conheça as modalidades</p>
+			<h1 th:text="${disciplina != null} ? ${disciplina.rotulo} : 'Artes marciais'">Artes marciais</h1>
+			<p>Explore estilos, tradições e técnicas de diferentes partes do mundo. Compare as modalidades e encontre uma para conhecer.</p>
+			<a class="portal-botao" th:href="@{/recomendacao}">Encontre sua arte <span aria-hidden="true">›</span></a>
+		</div>
+	</section>
+
+	<section class="cabecalho-pagina portal-intro">
 		<p class="subtitulo">
 			Listadas em ordem cronologica, da mais antiga para a mais recente.
 		</p>
 	</section>
 
-	<div class="grade">
+	<div class="grade portal-artes-grade">
 		<article class="cartao" th:each="arte : ${artes}"
-			th:classappend="${arte.slug == 'boxe'} ? ' cartao-inglaterra' : ''">
+			th:classappend="${arte.slug == 'boxe'} ? ' cartao-inglaterra portal-arte-card' : ' portal-arte-card'">
+			<a class="portal-arte-imagem" th:href="@{'/artes/' + ${arte.slug}}">
+				<img th:src="@{'/images/home/' + ${arte.slug} + '.jpg'}"
+					th:alt="'Praticantes de ' + ${arte.nome}" loading="lazy" decoding="async">
+			</a>
 			<div class="cartao-topo">
 				<span class="icone-arte" role="img" th:aria-label="'Simbolo de ' + ${arte.nome}"
 					th:text="${arte.icone}">🥋</span>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Roupas e uniformes')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container portal-page portal-roupas pagina-roupas">
+
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/cta.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Guia de vestimenta</p>
+			<h1>Roupas de cada arte marcial</h1>
+			<p>Uniformes, faixas e proteções mudam de uma modalidade para outra. Conheça os trajes e compare opções de compra.</p>
+			<a class="portal-botao" href="#roupas-modalidades">Explorar vestimentas <span aria-hidden="true">›</span></a>
+		</div>
+	</section>
+
+	<div id="roupas-modalidades" class="chips portal-chips">
+		<a class="chip" th:each="arte : ${artes}" th:href="'#roupa-' + ${arte.slug}"
+			th:text="${arte.nome}">Judo</a>
+	</div>
+
+	<aside class="aviso-compras" role="note">
+		<h2><span class="icone-secao" aria-hidden="true">ℹ</span> Antes de comprar</h2>
+		<ul class="lista">
+			<li>A regra de uniforme muda entre escolas e federacoes: pergunte ao instrutor
+				antes de comprar qualquer item.</li>
+			<li>Comece pelo item basico do traje e deixe faixa, protecao e bonus para depois.</li>
+			<li>As imagens sao ilustrativas e tem creditos e licencas indicados em cada traje.
+				Os links de compra abrem buscas em lojas externas; este projeto nao vende
+				produtos nem recebe comissao.</li>
+			<li>Este conteudo e informativo e nao substitui a orientacao do professor
+				da sua escola.</li>
+		</ul>
+	</aside>
+
+	<section class="tema-roupa"
+		th:each="arte : ${artes}"
+		th:with="vest=${vestuarioPorArte[arte.slug()]}"
+		th:id="'roupa-' + ${arte.slug}"
+		th:classappend="${arte.slug == 'muay-thai'} ? ' pagina-muay-thai' : (${arte.slug == 'jiu-jitsu'} ? ' pagina-jiu-jitsu' : ((${arte.slug == 'judo' or arte.slug == 'karate'}) ? ' pagina-japao' : (${arte.slug == 'taekwondo'} ? ' pagina-coreia' : (${arte.slug == 'boxe'} ? ' pagina-inglaterra' : ''))))">
+
+		<header class="cabecalho-pagina"
+			th:classappend="${arte.slug == 'muay-thai'} ? ' cabecalho-pagina-thailandia' : (${arte.slug == 'jiu-jitsu'} ? ' cabecalho-pagina-brasil' : ((${arte.slug == 'judo' or arte.slug == 'karate'}) ? ' cabecalho-pagina-japao' : (${arte.slug == 'taekwondo'} ? ' cabecalho-pagina-coreia' : (${arte.slug == 'boxe'} ? ' cabecalho-pagina-inglaterra' : ''))))">
+			<span class="icone-arte icone-arte-grande" role="img"
+				th:aria-label="'Simbolo de ' + ${arte.nome}" th:text="${arte.icone}">🥋</span>
+			<span class="selo" th:text="${arte.disciplina.rotulo}">Striking</span>
+			<h2 class="roupa-titulo" th:text="${vest.nomeRoupa}">Judogi</h2>
+			<p class="origem grande origem-com-bandeira">
+				<svg class="bandeira" aria-hidden="true" focusable="false" th:switch="${arte.slug}">
+					<use th:case="'judo'" th:href="@{/bandeiras.svg#japao}"></use>
+					<use th:case="'karate'" th:href="@{/bandeiras.svg#japao}"></use>
+					<use th:case="'taekwondo'" th:href="@{/bandeiras.svg#coreia-do-sul}"></use>
+					<use th:case="'jiu-jitsu'" th:href="@{/bandeiras.svg#brasil}"></use>
+					<use th:case="'muay-thai'" th:href="@{/bandeiras.svg#tailandia}"></use>
+					<use th:case="'boxe'" th:href="@{/bandeiras.svg#inglaterra}"></use>
+				</svg>
+				<span th:text="${arte.nome} + ' &middot; ' + ${arte.origem}">Judo &middot; Japao</span>
+				&middot;
+				<span th:text="${vest.nomeNativo}">Judo-gi</span>
+			</p>
+			<p class="subtitulo" th:text="${vest.resumo}">Resumo do traje.</p>
+		</header>
+
+		<section class="roupa-compra">
+			<figure class="roupa-imagem">
+				<img th:src="${vest.imagemUrl}" th:alt="'Imagem ilustrativa de ' + ${vest.nomeRoupa}"
+					loading="lazy" decoding="async">
+				<figcaption>
+					Imagem:
+					<a th:href="${vest.fonteImagemUrl}" target="_blank" rel="noopener noreferrer"
+						th:text="${vest.creditoImagem}">Credito e licenca</a>
+				</figcaption>
+			</figure>
+			<div class="roupa-compra-info">
+				<h3>Veja opcoes deste traje</h3>
+				<p>Compare tamanhos, materiais, frete e politica de troca. Confirme com o instrutor
+					se o modelo atende as regras da sua academia.</p>
+				<div class="chips">
+					<a class="chip" th:href="'https://www.amazon.com.br/s?k=' + ${vest.termoBusca}"
+						target="_blank" rel="noopener noreferrer">Buscar na Amazon Brasil ↗</a>
+					<a class="chip" th:href="'https://lista.mercadolivre.com.br/' + ${#strings.replace(vest.termoBusca, '+', '-')}"
+						target="_blank" rel="noopener noreferrer">Buscar no Mercado Livre ↗</a>
+				</div>
+			</div>
+		</section>
+
+		<div class="roupa-meta">
+			<article class="roupa-meta-item">
+				<h3>Tecido</h3>
+				<p th:text="${vest.tecido}">Algodao pesado.</p>
+			</article>
+			<article class="roupa-meta-item">
+				<h3>Cores</h3>
+				<ul>
+					<li th:each="cor : ${vest.cores}" th:text="${cor}">Azul</li>
+				</ul>
+			</article>
+			<article class="roupa-meta-item">
+				<h3>Calcado</h3>
+				<p th:text="${vest.calcado}">Descalco no tatame.</p>
+			</article>
+		</div>
+
+		<h3 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✂</span> Pecas do traje</h3>
+		<div class="grade grade-pecas">
+			<article class="cartao roupa-peca" th:each="peca : ${vest.pecas}">
+				<h3 th:text="${peca.nome}">Uke</h3>
+				<p th:text="${peca.descricao}">Descricao da peca.</p>
+			</article>
+		</div>
+
+		<div class="roupa-niveis">
+			<h3 class="secao-titulo"><span class="icone-secao" aria-hidden="true">⇑</span> Faixas e niveis</h3>
+			<ol class="chips">
+				<li class="chip" th:each="nivel : ${vest.niveis}" th:text="${nivel}">Branco</li>
+			</ol>
+		</div>
+
+		<div class="painel roupa-cuidados">
+			<h3><span class="icone-secao" aria-hidden="true">⚠</span> Cuidados com o traje</h3>
+			<div class="destaque" th:each="cuidado : ${vest.cuidados}">
+				<h4 th:text="${cuidado.titulo}">Titulo</h4>
+				<p th:text="${cuidado.descricao}">Descricao.</p>
+			</div>
+		</div>
+
+		<div class="chips roupa-links">
+			<a class="chip" th:href="@{'/artes/' + ${arte.slug}}">Analise completa</a>
+			<a class="chip" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Roteiro de treino</a>
+			<a class="chip" th:href="@{/lojas}">Onde comprar</a>
+		</div>
+
+	</section>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

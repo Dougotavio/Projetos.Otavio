@@ -7,17 +7,18 @@
 
 <header th:replace="~{fragments/comum :: cabecalho}"></header>
 
-<main class="container">
-	<section class="cabecalho-pagina">
-		<span class="selo">Guia de compras</span>
-		<h1>Lojas de equipamentos</h1>
-		<p class="subtitulo">
-			Encontre equipamentos para treinar e compare opcoes em lojas esportivas,
-			marcas especializadas e marketplaces.
-		</p>
+<main class="container portal-page portal-lojas">
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/cta.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Guia de compras</p>
+			<h1>Lojas de equipamentos</h1>
+			<p>Encontre equipamentos para treinar e compare opções em lojas esportivas, marcas especializadas e marketplaces.</p>
+			<a class="portal-botao" href="#lojas-categorias">Ver lojas <span aria-hidden="true">›</span></a>
+		</div>
 	</section>
 
-	<section class="bloco">
+	<section id="lojas-categorias" class="bloco">
 		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">💰</span> Melhor ponto de partida para custo-beneficio</h2>
 		<p class="texto">Para comecar, compare opcoes de entrada e o custo total, incluindo frete e troca. Preco e disponibilidade mudam por produto.</p>
 		<div class="grade grade-lojas">
