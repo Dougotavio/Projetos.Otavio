@@ -10,6 +10,16 @@
 <main class="container"
 	th:classappend="${arte.slug == 'muay-thai'} ? ' pagina-muay-thai' : (${arte.slug == 'jiu-jitsu'} ? ' pagina-jiu-jitsu' : (${arte.slug == 'judo' or arte.slug == 'karate'} ? ' pagina-japao' : (${arte.slug == 'taekwondo'} ? ' pagina-coreia' : (${arte.slug == 'boxe'} ? ' pagina-inglaterra' : ''))))">
 
+	<div class="muay-thai-fundo-video" th:if="${arte.slug == 'muay-thai'}" aria-hidden="true">
+		<iframe
+			th:src="|https://www.youtube-nocookie.com/embed/${arte.videoId}?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=${arte.videoId}&amp;playsinline=1&amp;rel=0|"
+			title="Video de fundo do Muay Thai"
+			tabindex="-1"
+			allow="autoplay; encrypted-media"
+			referrerpolicy="strict-origin-when-cross-origin">
+		</iframe>
+	</div>
+
 	<a class="voltar" th:href="@{/artes}">&larr; Voltar para todas as artes</a>
 
 	<section class="cabecalho-pagina"
