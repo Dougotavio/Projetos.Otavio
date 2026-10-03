@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Sobre')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+
+	<section class="cabecalho-pagina">
+		<h1>Sobre o site</h1>
+		<p class="subtitulo">
+			Um catalogo comparativo de <strong th:text="${total}">6</strong> artes marciais.
+		</p>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">Por que comparar?</h2>
+		<p class="texto">
+			Toda arte marcial e boa em alguma coisa e ruim em outra. O judo derruba
+			mas nao bate. O muay thai bate muito mas nao resolve bem a luta no
+			chao. Comparar com honestidade - inclusive apontando os pontos fracos -
+			ajuda quem esta comecando a escolher por criterio em vez de por
+			imitacao.
+		</p>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">O que voce encontra aqui</h2>
+		<ul class="lista">
+			<li>Historia de cada arte, com origem, fundacao e difusao.</li>
+			<li>Pontos fortes: o que ela faz bem.</li>
+			<li>Pontos fracos: onde ela falha, sem suavizar.</li>
+			<li>Uma tabela com as artes lado a lado, incluindo o boxe.</li>
+		</ul>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">Tecnologia</h2>
+		<p class="texto">
+			Site feito com Spring Boot 4 e Thymeleaf, servindo paginas HTML geradas
+			no servidor. Os dados ficam em memoria, com um repositorio proprio para
+			trocar a origem das informacoes sem alterar as paginas.
+		</p>
+	</section>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Nao encontrado')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+	<section class="cabecalho-pagina">
+		<h1>404</h1>
+		<p class="subtitulo">Nao encontramos essa arte marcial.</p>
+		<a class="botao" th:href="@{/artes}">Ver todas as artes</a>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

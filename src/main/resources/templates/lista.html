@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Artes')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+
+	<section class="cabecalho-pagina">
+		<h1 th:text="${disciplina != null} ? ${disciplina.rotulo} : 'Todas as artes'">Todas as artes</h1>
+		<p class="subtitulo">
+			Listadas em ordem cronologica, da mais antiga para a mais recente.
+		</p>
+	</section>
+
+	<div class="grade">
+		<article class="cartao" th:each="arte : ${artes}"
+			th:classappend="${arte.slug == 'boxe'} ? ' cartao-inglaterra' : ''">
+			<div class="cartao-topo">
+				<span class="icone-arte" role="img" th:aria-label="'Simbolo de ' + ${arte.nome}"
+					th:text="${arte.icone}">🥋</span>
+				<span class="selo" th:text="${arte.disciplina.rotulo}">Striking</span>
+				<span class="ano" th:text="${arte.anoFormatado()}">1882 d.C.</span>
+			</div>
+			<h3 th:text="${arte.nome}">Judo</h3>
+			<p class="origem origem-com-bandeira">
+				<svg class="bandeira" aria-hidden="true" focusable="false" th:switch="${arte.slug}">
+					<use th:case="'judo'" th:href="@{/bandeiras.svg#japao}"></use>
+					<use th:case="'karate'" th:href="@{/bandeiras.svg#japao}"></use>
+					<use th:case="'taekwondo'" th:href="@{/bandeiras.svg#coreia-do-sul}"></use>
+					<use th:case="'jiu-jitsu'" th:href="@{/bandeiras.svg#brasil}"></use>
+					<use th:case="'muay-thai'" th:href="@{/bandeiras.svg#tailandia}"></use>
+					<use th:case="'boxe'" th:href="@{/bandeiras.svg#inglaterra}"></use>
+				</svg>
+				<span th:text="${arte.origem}">Japao</span>
+			</p>
+			<p th:text="${arte.resumo}">Resumo da arte.</p>
+
+			<div class="mini-resumo">
+				<span class="mini-forte" th:text="${arte.pontosFortes.size()} + ' pontos fortes'">4 pontos fortes</span>
+				<span class="mini-fraco" th:text="${arte.pontosFracos.size()} + ' pontos fracos'">3 pontos fracos</span>
+			</div>
+
+			<a class="link-mais" th:href="@{'/artes/' + ${arte.slug}}">Ler a analise completa &rarr;</a>
+		</article>
+	</div>
+
+	<p class="vazio" th:if="${#lists.isEmpty(artes)}">
+		Nenhuma arte encontrada para esta categoria.
+	</p>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

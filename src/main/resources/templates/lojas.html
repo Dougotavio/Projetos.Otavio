@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Lojas de equipamentos')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+	<section class="cabecalho-pagina">
+		<span class="selo">Guia de compras</span>
+		<h1>Lojas de equipamentos</h1>
+		<p class="subtitulo">
+			Encontre equipamentos para treinar e compare opcoes em lojas esportivas,
+			marcas especializadas e marketplaces.
+		</p>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">💰</span> Melhor ponto de partida para custo-beneficio</h2>
+		<p class="texto">Para comecar, compare opcoes de entrada e o custo total, incluindo frete e troca. Preco e disponibilidade mudam por produto.</p>
+		<div class="grade grade-lojas">
+			<article class="cartao cartao-loja">
+				<span class="icone-loja" aria-hidden="true">🏃</span>
+				<h3>Decathlon</h3>
+				<span class="selo selo-categoria">Custo-beneficio</span>
+				<p>Boa primeira comparacao para equipamentos esportivos de entrada e itens basicos. Confira as especificacoes e se o produto atende ao treino indicado pelo professor.</p>
+				<a class="link-mais" href="https://www.decathlon.com.br/busca/?q=artes%20marciais"
+					target="_blank" rel="noopener noreferrer">Buscar artes marciais na Decathlon ↗</a>
+			</article>
+
+			<article class="cartao cartao-loja">
+				<span class="icone-loja" aria-hidden="true">🛒</span>
+				<h3>Amazon Brasil</h3>
+				<span class="selo selo-categoria">Comparar precos</span>
+				<p>Marketplace com opcoes de diferentes vendedores; confira avaliacao, medidas e politica de troca.</p>
+				<a class="link-mais" href="https://www.amazon.com.br/s?k=equipamentos+artes+marciais"
+					target="_blank" rel="noopener noreferrer">Buscar equipamentos na Amazon ↗</a>
+			</article>
+
+			<article class="cartao cartao-loja">
+				<span class="icone-loja" aria-hidden="true">🛍️</span>
+				<h3>Mercado Livre</h3>
+				<span class="selo selo-categoria">Comparar precos</span>
+				<p>Marketplace com variedade de marcas e vendedores. Verifique reputacao, especificacoes e envio.</p>
+				<a class="link-mais" href="https://lista.mercadolivre.com.br/equipamentos-artes-marciais"
+					target="_blank" rel="noopener noreferrer">Buscar equipamentos no Mercado Livre ↗</a>
+			</article>
+		</div>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">🏆</span> Foco em equipamento especializado</h2>
+		<p class="texto">Para procurar linhas dedicadas a esportes de combate, uma marca especializada pode oferecer mais variedade de modelos e protecoes. Compare cada produto: ser uma marca especializada nao garante, por si so, que todo item seja melhor ou adequado ao seu uso.</p>
+		<div class="grade grade-lojas">
+			<article class="cartao cartao-loja">
+				<span class="icone-loja" aria-hidden="true">🥊</span>
+				<h3>Venum</h3>
+				<span class="selo selo-categoria">Linha especializada</span>
+				<p>Marca focada em esportes de combate, com luvas, caneleiras, protecoes e vestuario. Compare materiais, nivel de protecao, tamanho e garantia entre modelos.</p>
+				<a class="link-mais" href="https://www.venum.com.br/"
+					target="_blank" rel="noopener noreferrer">Visitar o site da Venum ↗</a>
+			</article>
+		</div>
+	</section>
+
+	<section class="aviso-compras">
+		<h2><span class="icone-secao" aria-hidden="true">ℹ</span> Antes de comprar</h2>
+		<ul class="lista">
+			<li>Pergunte ao instrutor quais itens sao exigidos e quais podem esperar.</li>
+			<li>Confira guia de tamanhos, material, politica de troca, frete e prazo de entrega.</li>
+			<li>Em marketplaces, confira a reputacao do vendedor e se o produto corresponde ao anuncio.</li>
+			<li>A categoria indica por onde comecar a pesquisa; nao e um teste independente nem uma garantia de preco ou qualidade.</li>
+			<li>Os links levam a sites externos. Este projeto nao vende produtos, nao garante disponibilidade e nao recebe comissao por compras.</li>
+		</ul>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

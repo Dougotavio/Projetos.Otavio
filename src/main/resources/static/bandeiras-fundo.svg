@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMin slice">
+	<rect width="1600" height="1000" fill="#0f1115"/>
+	<g opacity=".16">
+		<g>
+			<rect width="800" height="500" fill="#009739"/>
+			<path d="M400 70 750 250 400 430 50 250Z" fill="#ffdf00"/>
+			<circle cx="400" cy="250" r="105" fill="#002776"/>
+		</g>
+		<g transform="translate(800)">
+			<rect width="800" height="500" fill="#f4f5f8"/>
+			<circle cx="400" cy="250" r="125" fill="#bc002d"/>
+		</g>
+		<g transform="translate(0 500)">
+			<rect width="800" height="500" fill="#f4f5f8"/>
+			<path d="M270 180a130 130 0 0 1 260 0 65 65 0 0 1-130 0 65 65 0 0 0-130 0Z" fill="#cd2e3a"/>
+			<path d="M530 180a130 130 0 0 1-260 0 65 65 0 0 1 130 0 65 65 0 0 0 130 0Z" fill="#0047a0"/>
+			<g fill="#1a1a1a">
+				<path d="M115 85h120v18H115zm0 35h120v18H115zm0 35h120v18H115z"/>
+				<path d="M565 362h120v18H565zm0 35h120v18H565zm0 35h120v18H565z"/>
+				<path d="M115 362h120v18H115zm0 35h120v18H115zm0 35h120v18H115z"/>
+				<path d="M565 85h120v18H565zm0 35h120v18H565zm0 35h120v18H565z"/>
+			</g>
+		</g>
+		<g transform="translate(800 500)">
+			<rect width="800" height="500" fill="#a51931"/>
+			<path d="M0 83h800v84H0zm0 250h800v84H0z" fill="#f4f5f8"/>
+			<path d="M0 167h800v166H0z" fill="#2d2a4a"/>
+		</g>
+	</g>
+</svg>

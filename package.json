@@ -1,0 +1,8 @@
+{
+  "name": "artes-marciais",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "build-local.cmd spring-boot:run"
+  }
+}

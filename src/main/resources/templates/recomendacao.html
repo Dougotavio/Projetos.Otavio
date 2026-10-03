@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Encontre sua arte')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+	<section class="cabecalho-pagina">
+		<span class="selo">Questionario personalizado</span>
+		<h1>Encontre uma arte para experimentar</h1>
+		<p class="subtitulo">
+			Conte um pouco sobre seus objetivos e preferencias para ver uma sugestao
+			explicada, com outras opcoes para comparar.
+		</p>
+	</section>
+
+	<form class="formulario-recomendacao" th:action="@{/recomendacao}" th:object="${perfil}" method="post">
+		<section class="bloco">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">◎</span> Sobre voce</h2>
+			<div class="campos-grade">
+				<div class="campo">
+					<label for="genero">Genero <span class="campo-opcional">(opcional)</span></label>
+					<select id="genero" th:field="*{genero}">
+						<option th:each="opcao : ${generos}" th:value="${opcao.valor}" th:text="${opcao.rotulo}">Prefiro nao informar</option>
+					</select>
+					<small class="ajuda-campo">Nao altera a pontuacao da recomendacao.</small>
+				</div>
+				<div class="campo">
+					<label for="idade">Idade</label>
+					<input id="idade" type="number" th:field="*{idade}" min="6" max="100" required>
+					<small class="erro-campo" th:if="${erros != null and erros.containsKey('idade')}" th:text="${erros['idade']}"></small>
+				</div>
+				<div class="campo">
+					<label for="alturaCm">Altura (cm)</label>
+					<input id="alturaCm" type="number" th:field="*{alturaCm}" min="80" max="230" required>
+					<small class="erro-campo" th:if="${erros != null and erros.containsKey('alturaCm')}" th:text="${erros['alturaCm']}"></small>
+				</div>
+				<div class="campo">
+					<label for="pesoKg">Peso (kg)</label>
+					<input id="pesoKg" type="number" th:field="*{pesoKg}" min="15" max="300" step="0.1" required>
+					<small class="erro-campo" th:if="${erros != null and erros.containsKey('pesoKg')}" th:text="${erros['pesoKg']}"></small>
+				</div>
+			</div>
+			<p class="ajuda-campo aviso-privacidade">
+				Esses dados sao usados apenas para esta resposta e nao sao salvos.
+				Altura e peso nao definem qual arte e adequada; podem ajudar numa conversa
+				com o instrutor sobre pareamento e adaptacoes.
+			</p>
+		</section>
+
+		<section class="bloco">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">🎯</span> Seus objetivos e preferencias</h2>
+			<div class="campos-grade">
+				<div class="campo">
+					<label for="objetivo">Qual e seu principal objetivo?</label>
+					<select id="objetivo" th:field="*{objetivo}" required>
+						<option th:each="opcao : ${objetivos}" th:value="${opcao.valor}" th:text="${opcao.rotulo}">Condicionamento</option>
+					</select>
+				</div>
+				<div class="campo">
+					<label for="preferencia">Que tipo de tecnica mais interessa?</label>
+					<select id="preferencia" th:field="*{preferencia}" required>
+						<option th:each="opcao : ${preferencias}" th:value="${opcao.valor}" th:text="${opcao.rotulo}">Sem preferencia</option>
+					</select>
+				</div>
+				<div class="campo">
+					<label for="experiencia">Sua experiencia com artes marciais</label>
+					<select id="experiencia" th:field="*{experiencia}" required>
+						<option th:each="opcao : ${experiencias}" th:value="${opcao.valor}" th:text="${opcao.rotulo}">Iniciante</option>
+					</select>
+				</div>
+				<div class="campo">
+					<label for="contato">Qual nivel de contato voce prefere?</label>
+					<select id="contato" th:field="*{contato}" required>
+						<option th:each="opcao : ${contatos}" th:value="${opcao.valor}" th:text="${opcao.rotulo}">Contato moderado</option>
+					</select>
+					<small class="ajuda-campo">A intensidade varia entre academias e turmas.</small>
+				</div>
+			</div>
+			<label class="opcao-checkbox">
+				<input type="checkbox" th:field="*{possuiRestricao}">
+				Tenho uma lesao ou limitacao que quero discutir com o instrutor
+			</label>
+		</section>
+
+		<div class="erros-formulario" th:if="${erros != null and !erros.isEmpty()}">
+			<p>Confira os campos destacados e envie novamente.</p>
+			<ul>
+				<li th:each="erro : ${erros.values()}" th:text="${erro}">Verifique este campo.</li>
+			</ul>
+		</div>
+		<button class="botao botao-enviar" type="submit">Ver minha recomendacao</button>
+	</form>
+
+	<section class="bloco resultado-recomendacao" th:if="${resultado != null}">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Sua sugestao para experimentar</h2>
+		<article class="cartao cartao-recomendado">
+			<div class="cartao-topo">
+				<span class="icone-arte" role="img" th:aria-label="'Simbolo de ' + ${resultado.principal.nome}"
+					th:text="${resultado.principal.icone}">🥋</span>
+				<span class="selo">Mais compativel com suas respostas</span>
+			</div>
+			<h3 th:text="${resultado.principal.nome}">Judo</h3>
+			<p class="origem" th:text="${resultado.principal.origem}">Origem</p>
+			<p th:text="${resultado.principal.resumo}">Resumo da arte.</p>
+			<p class="texto" th:text="${resultado.principal.historia}">Historia da arte.</p>
+			<a class="link-mais" th:href="@{'/artes/' + ${resultado.principal.slug}}">Conhecer a arte e assistir ao video &rarr;</a>
+		</article>
+
+		<div class="perfil-resumo">
+			<h3>Seu perfil informado</h3>
+			<p><strong>Idade:</strong> <span th:text="${perfil.idade}">25</span> anos
+				<span class="separador-perfil">·</span>
+				<strong>Altura:</strong> <span th:text="${perfil.alturaCm}">170</span> cm
+				<span class="separador-perfil">·</span>
+				<strong>Peso:</strong> <span th:text="${perfil.pesoKg}">70</span> kg</p>
+			<p><strong>Objetivo:</strong> <span th:text="${#strings.replace(#strings.toLowerCase(perfil.objetivo), '_', ' ')}">condicionamento</span>
+				<span class="separador-perfil">·</span>
+				<strong>Experiencia:</strong> <span th:text="${#strings.toLowerCase(perfil.experiencia)}">iniciante</span>
+				<span class="separador-perfil">·</span>
+				<strong>Contato:</strong> <span th:text="${#strings.toLowerCase(perfil.contato)}">moderado</span></p>
+		</div>
+
+		<section class="observacoes-recomendacao">
+			<h3>Como interpretar esta sugestao</h3>
+			<ul>
+				<li th:each="observacao : ${resultado.observacoes}" th:text="${observacao}">Orientacao personalizada.</li>
+			</ul>
+			<p>A pontuacao e uma orientacao editorial baseada nas respostas, nao uma avaliacao medica ou garantia de adequacao. Experimente uma aula e converse com o instrutor.</p>
+		</section>
+
+		<section class="alternativas-recomendacao">
+			<h3>Outras artes para comparar</h3>
+			<div class="chips">
+				<a class="chip" th:each="arte : ${resultado.alternativas}"
+					th:href="@{'/artes/' + ${arte.slug}}">
+					<span th:text="${arte.icone}">🥋</span>
+					<span th:text="${arte.nome}">Outra arte</span>
+				</a>
+			</div>
+		</section>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

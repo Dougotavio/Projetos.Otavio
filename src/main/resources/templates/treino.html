@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head(${arte.nome} + ' - Treino')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container pagina-treino">
+	<a class="voltar" th:href="@{'/artes/' + ${arte.slug}}">&larr; Voltar para <span th:text="${arte.nome}">a arte</span></a>
+
+	<section class="cabecalho-pagina cabecalho-treino">
+		<span class="icone-arte icone-arte-grande" role="img"
+			th:aria-label="'Simbolo de ' + ${arte.nome}" th:text="${arte.icone}">🥋</span>
+		<span class="selo">Roteiro introdutorio</span>
+		<h1>Treino de <span th:text="${arte.nome}">Judo</span></h1>
+		<p class="subtitulo">Uma estrutura inicial para conversar com seu instrutor e adaptar ao seu nivel, condicao fisica e objetivos.</p>
+	</section>
+
+	<aside class="aviso-treino" role="note">
+		<strong>Seguranca primeiro:</strong> este roteiro e apenas educativo, nao substitui aulas presenciais nem a orientacao de um profissional qualificado. Comece com intensidade leve, use o equipamento adequado e interrompa se sentir dor, tontura ou mal-estar. Nao pratique quedas, golpes, estrangulamentos ou chaves sem supervisao.
+	</aside>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">Estrutura sugerida para uma aula</h2>
+		<div class="grade grade-etapas-treino">
+			<article class="cartao etapa-treino">
+				<span class="etapa-numero">01</span>
+				<h3>Aquecimento · 8–10 min</h3>
+				<p>Movimentos leves para elevar a temperatura corporal, mobilidade confortavel e preparacao das articulacoes. Ajuste o ritmo para conseguir conversar.</p>
+			</article>
+			<article class="cartao etapa-treino">
+				<span class="etapa-numero">02</span>
+				<h3>Fundamentos · 15–20 min</h3>
+				<p>Aprenda postura, deslocamentos e tecnicas basicas com demonstracao e correcao do instrutor, priorizando qualidade em vez de velocidade.</p>
+			</article>
+			<article class="cartao etapa-treino">
+				<span class="etapa-numero">03</span>
+				<h3>Pratica controlada · 10–15 min</h3>
+				<p>Repita os fundamentos em exercicios individuais ou cooperativos. Contato, quedas e sparring ficam sujeitos a avaliacao e supervisao do professor.</p>
+			</article>
+			<article class="cartao etapa-treino">
+				<span class="etapa-numero">04</span>
+				<h3>Volta a calma · 5 min</h3>
+				<p>Reduza o ritmo, respire com calma e observe como esta se sentindo. Hidrate-se e compartilhe qualquer desconforto com o instrutor.</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">Foco especifico: <span th:text="${arte.nome}">Judo</span></h2>
+		<div class="painel treino-especifico" th:switch="${arte.slug}">
+			<div th:case="'judo'">
+				<h3>Equilibrio, deslocamento e quedas seguras</h3>
+				<ul>
+					<li>Inicie com postura, movimentacao e exercicios de equilibrio sem resistencia.</li>
+					<li>Aprenda ukemi (tecnicas de amortecimento de queda) somente com instrutor e em tatame apropriado.</li>
+					<li>Projecoes e randori devem esperar a liberacao do professor e parceiros preparados.</li>
+				</ul>
+			</div>
+			<div th:case="'karate'">
+				<h3>Base, kihon e controle tecnico</h3>
+				<ul>
+					<li>Treine postura, deslocamentos e fundamentos de socos e chutes sem impacto.</li>
+					<li>Pratique kata em ritmo confortavel, priorizando equilibrio e precisao.</li>
+					<li>Exercicios com parceiro devem ser controlados, com distancia, regras e protecao definidas pelo sensei.</li>
+				</ul>
+			</div>
+			<div th:case="'taekwondo'">
+				<h3>Base, mobilidade e chutes progressivos</h3>
+				<ul>
+					<li>Comece com equilibrio, guarda e deslocamentos antes de acelerar os movimentos.</li>
+					<li>Pratique chutes em altura confortavel e aumente a amplitude gradualmente, sem forcar alongamentos.</li>
+					<li>Alvos e aparadores devem ser usados com orientacao, distancia segura e equipamento adequado.</li>
+				</ul>
+			</div>
+			<div th:case="'jiu-jitsu'">
+				<h3>Movimentacao no solo e posicoes</h3>
+				<ul>
+					<li>Aprenda movimentos basicos no solo e nomes das posicoes com demonstracao do professor.</li>
+					<li>Treine transicoes cooperativas e pausadas antes de qualquer exercicio resistido.</li>
+					<li>Respeite o tap, solte imediatamente ao sinal do parceiro e nao aplique chaves ou estrangulamentos sem supervisao.</li>
+				</ul>
+			</div>
+			<div th:case="'muay-thai'">
+				<h3>Guarda, deslocamento e combinacoes leves</h3>
+				<ul>
+					<li>Comece por postura, guarda e movimentacao sem contato.</li>
+					<li>Pratique combinacoes no ar ou em aparadores segurados por pessoa treinada, com potencia baixa.</li>
+					<li>Clinche, cotoveladas, joelhadas e sparring exigem instrucao, consentimento, protecao e controle rigoroso.</li>
+				</ul>
+			</div>
+			<div th:case="'boxe'">
+				<h3>Base, deslocamento e golpes controlados</h3>
+				<ul>
+					<li>Aprenda guarda, movimentacao e golpes no ar em ritmo leve, com foco na tecnica.</li>
+					<li>Saco e aparadores devem ser usados com bandagens, luvas adequadas e instrucao sobre o equipamento.</li>
+					<li>Sparring nao e obrigatorio para aprender fundamentos; qualquer contato requer acordo, protecao e autorizacao do treinador.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="duas-colunas bloco">
+		<article class="painel">
+			<h2>Frequencia inicial</h2>
+			<p>Converse com o instrutor sobre comecar com uma ou duas aulas por semana e dias de recuperacao entre elas. A frequencia adequada depende da sua saude, experiencia e resposta ao treino.</p>
+		</article>
+		<article class="painel">
+			<h2>Antes da primeira aula</h2>
+			<p>Informe seu nivel de experiencia, lesoes ou limitacoes relevantes; pergunte sobre vestuario, higiene e protecao; e confirme que a aula oferece alternativas para iniciantes.</p>
+		</article>
+	</section>
+
+	<section class="bloco">
+		<div class="chips">
+			<a class="chip" th:href="@{'/artes/' + ${arte.slug}}">Voltar ao catalogo de <span th:text="${arte.nome}">Judo</span></a>
+			<a class="chip" th:href="@{/recomendacao}">Encontrar minha arte</a>
+			<a class="chip" th:href="@{/lojas}">Ver equipamentos</a>
+		</div>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

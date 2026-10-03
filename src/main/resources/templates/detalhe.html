@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head(${arte.nome})}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container"
+	th:classappend="${arte.slug == 'muay-thai'} ? ' pagina-muay-thai' : (${arte.slug == 'jiu-jitsu'} ? ' pagina-jiu-jitsu' : (${arte.slug == 'judo' or arte.slug == 'karate'} ? ' pagina-japao' : (${arte.slug == 'taekwondo'} ? ' pagina-coreia' : (${arte.slug == 'boxe'} ? ' pagina-inglaterra' : ''))))">
+
+	<a class="voltar" th:href="@{/artes}">&larr; Voltar para todas as artes</a>
+
+	<section class="cabecalho-pagina"
+		th:classappend="${arte.slug == 'muay-thai'} ? ' cabecalho-pagina-thailandia' : (${arte.slug == 'jiu-jitsu'} ? ' cabecalho-pagina-brasil' : ((${arte.slug == 'judo' or arte.slug == 'karate'}) ? ' cabecalho-pagina-japao' : (${arte.slug == 'taekwondo'} ? ' cabecalho-pagina-coreia' : (${arte.slug == 'boxe'} ? ' cabecalho-pagina-inglaterra' : ''))))">
+		<span class="icone-arte icone-arte-grande" role="img"
+			th:aria-label="'Simbolo de ' + ${arte.nome}" th:text="${arte.icone}">🥋</span>
+		<span class="selo" th:text="${arte.disciplina.rotulo}">Striking</span>
+		<h1 th:text="${arte.nome}">Judo</h1>
+		<p class="origem grande" th:text="${arte.origem} + ' &middot; ' + ${arte.anoFormatado()}">
+			Japao &middot; 1882 d.C.
+		</p>
+		<p class="subtitulo" th:text="${arte.resumo}">Resumo da arte.</p>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">▶</span>
+			Veja <span th:text="${arte.nome}">a arte</span> em acao</h2>
+		<div class="video-responsivo">
+			<iframe th:src="|https://www.youtube-nocookie.com/embed/${arte.videoId}|"
+				th:title="'Demonstracao de ' + ${arte.nome}"
+				loading="lazy"
+				referrerpolicy="strict-origin-when-cross-origin"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen>
+			</iframe>
+		</div>
+		<p class="video-nota">Video hospedado no YouTube. A reproducao requer conexao com a internet.</p>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">📜</span> Historia</h2>
+		<p class="texto" th:text="${arte.historia}">Texto historico.</p>
+	</section>
+
+	<section class="bloco chamada-treino">
+		<div>
+			<p class="chamada-etiqueta">Quer comecar?</p>
+			<h2>Veja um roteiro introdutorio de <span th:text="${arte.nome}">Judo</span></h2>
+			<p>Conheca uma sugestao de treino inicial, com progressao e cuidados especificos da modalidade.</p>
+		</div>
+		<a class="botao" th:href="@{'/artes/' + ${arte.slug} + '/treino'}">Ver treino de <span th:text="${arte.nome}">Judo</span></a>
+	</section>
+
+	<section class="bloco personagem-ficcao" th:switch="${arte.slug}">
+		<th:block th:case="'judo'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Judo</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🥋</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · anime Judo Boy</p>
+					<h3>Sanshiro Kurenai</h3>
+					<p>Protagonista de <em>Judo Boy</em>, Sanshiro percorre o mundo treinando e enfrentando adversarios com tecnicas de judo.</p>
+				</div>
+			</article>
+		</th:block>
+		<th:block th:case="'karate'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Karate</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🥋</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · jogos Street Fighter</p>
+					<h3>Ryu</h3>
+					<p>Guerreiro errante da serie <em>Street Fighter</em>, Ryu luta usando o estilo ficticio Ansatsuken, inspirado em artes marciais como o karate.</p>
+				</div>
+			</article>
+		</th:block>
+		<th:block th:case="'taekwondo'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Taekwondo</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🦵</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · jogos Tekken</p>
+					<h3>Hwoarang</h3>
+					<p>Competidor da serie <em>Tekken</em>, Hwoarang e conhecido por lutar com taekwondo e por suas sequencias de chutes.</p>
+				</div>
+			</article>
+		</th:block>
+		<th:block th:case="'jiu-jitsu'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Jiu-Jitsu</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🥋</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · manga e anime Kengan Ashura</p>
+					<h3>Cosmo Imai</h3>
+					<p>Conhecido como “Rei dos Estrangulamentos”, Cosmo compete em <em>Kengan Ashura</em> usando grappling e tecnicas de jiu-jitsu brasileiro.</p>
+				</div>
+			</article>
+		</th:block>
+		<th:block th:case="'muay-thai'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Muay Thai</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🥊</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · jogos Street Fighter</p>
+					<h3>Sagat</h3>
+					<p>Apresentado como campeao de Muay Thai em <em>Street Fighter</em>, Sagat e um dos personagens mais associados a essa modalidade nos jogos.</p>
+				</div>
+			</article>
+		</th:block>
+		<th:block th:case="'boxe'">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Personagem ficticio ligado ao Boxe</h2>
+			<article class="cartao personagem-cartao">
+				<span class="personagem-simbolo" aria-hidden="true">🥊</span>
+				<div>
+					<p class="personagem-etiqueta">Personagem ficticio · jogos Punch-Out!!</p>
+					<h3>Little Mac</h3>
+					<p>Protagonista da serie <em>Punch-Out!!</em>, Little Mac e um boxeador que enfrenta adversarios em torneios de videogame.</p>
+				</div>
+			</article>
+		</th:block>
+		<p class="personagem-nota">As lutas e habilidades mostradas em obras de ficcao podem ser exageradas e nao representam necessariamente a pratica real ou segura da modalidade.</p>
+	</section>
+
+	<section class="duas-colunas">
+		<div class="painel painel-forte">
+			<h2><span class="icone-secao" aria-hidden="true">✓</span> Pontos fortes</h2>
+			<div class="destaque" th:each="ponto : ${arte.pontosFortes}">
+				<h3 th:text="${ponto.titulo}">Titulo</h3>
+				<p th:text="${ponto.descricao}">Descricao.</p>
+			</div>
+		</div>
+
+		<div class="painel painel-fraco">
+			<h2><span class="icone-secao" aria-hidden="true">⚠</span> Pontos fracos</h2>
+			<div class="destaque" th:each="ponto : ${arte.pontosFracos}">
+				<h3 th:text="${ponto.titulo}">Titulo</h3>
+				<p th:text="${ponto.descricao}">Descricao.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bloco">
+		<h2 class="secao-titulo">Outras artes</h2>
+		<div class="chips">
+			<a class="chip" th:each="outra : ${outras}" th:href="@{'/artes/' + ${outra.slug}}"
+				th:text="${outra.nome}">Outra arte</a>
+		</div>
+	</section>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

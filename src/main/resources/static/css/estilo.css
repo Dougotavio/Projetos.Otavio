@@ -1,0 +1,1397 @@
+:root {
+	--fundo: #0f1115;
+	--superficie: #171a21;
+	--superficie-2: #1e222b;
+	--borda: #2a2f3a;
+	--texto: #e8eaf0;
+	--texto-suave: #9aa2b4;
+	--destaque: #d4a24e;
+	--forte: #4ea87a;
+	--fraco: #d1615f;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a,
+button {
+	transition: box-shadow 180ms ease, transform 180ms ease, filter 180ms ease;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--destaque);
+	outline-offset: 3px;
+}
+
+body {
+	margin: 0;
+	background-color: var(--fundo);
+	background-image: url("../bandeiras-fundo.svg");
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	color: var(--texto);
+	font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	line-height: 1.65;
+}
+
+.container {
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+h1, h2, h3 {
+	line-height: 1.25;
+}
+
+/* ---------- cabecalho ---------- */
+
+.cabecalho {
+	border-bottom: 1px solid var(--borda);
+	background: var(--superficie);
+}
+
+.cabecalho .container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.marca {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--texto);
+	text-decoration: none;
+	font-size: 1.15rem;
+	letter-spacing: 0.03em;
+}
+
+.marca-icone {
+	display: block;
+	width: 34px;
+	height: 34px;
+	border: 1px solid var(--borda);
+	border-radius: 8px;
+}
+
+.marca strong {
+	color: var(--destaque);
+}
+
+.cabecalho nav {
+	display: flex;
+	gap: 22px;
+	flex-wrap: wrap;
+}
+
+.cabecalho nav a {
+	display: inline-block;
+	padding: 4px 2px;
+	color: var(--texto-suave);
+	text-decoration: none;
+	font-size: 0.95rem;
+}
+
+.cabecalho nav a:hover {
+	color: var(--texto);
+	box-shadow: 0 3px 0 rgba(212, 162, 78, 0.55);
+}
+
+/* ---------- home ---------- */
+
+.hero {
+	padding: 72px 0 40px;
+	max-width: 760px;
+}
+
+.hero h1 {
+	font-size: 2.6rem;
+	margin-bottom: 18px;
+}
+
+.subtitulo {
+	color: var(--texto-suave);
+	font-size: 1.1rem;
+	margin-top: 0;
+}
+
+.botao {
+	display: inline-block;
+	margin-top: 18px;
+	padding: 12px 26px;
+	background: var(--destaque);
+	color: #14161b;
+	text-decoration: none;
+	border-radius: 6px;
+	font-weight: 600;
+	box-shadow: 0 5px 14px rgba(0, 0, 0, 0.24);
+}
+
+.botao:hover {
+	filter: brightness(1.08);
+	box-shadow: 0 8px 20px rgba(212, 162, 78, 0.25);
+	transform: translateY(-2px);
+}
+
+.botao:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.24);
+}
+
+.botao-secundario {
+	margin-left: 10px;
+	border: 1px solid var(--destaque);
+	background: transparent;
+	color: var(--destaque);
+}
+
+.numeros {
+	display: flex;
+	gap: 44px;
+	flex-wrap: wrap;
+	padding: 26px 0 54px;
+	border-top: 1px solid var(--borda);
+}
+
+.numero {
+	display: flex;
+	flex-direction: column;
+}
+
+.numero strong {
+	font-size: 1.7rem;
+	color: var(--destaque);
+}
+
+.numero span {
+	color: var(--texto-suave);
+	font-size: 0.9rem;
+}
+
+.inspiracao {
+	margin: 8px 0 56px;
+	padding: 8px 0 0;
+}
+
+.inspiracao-intro {
+	max-width: 780px;
+}
+
+.grade-motivos {
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.cartao-inspiracao {
+	gap: 8px;
+	box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+
+.cartao-inspiracao .icone-secao {
+	width: 38px;
+	height: 38px;
+	margin: 0 0 4px;
+	border: 1px solid rgba(212, 162, 78, 0.28);
+	border-radius: 11px;
+	font-size: 1.05rem;
+}
+
+.cartao-inspiracao h3,
+.cartao-trajetoria h3 {
+	margin: 0;
+	font-size: 1.08rem;
+}
+
+.cartao-inspiracao p,
+.cartao-trajetoria p:last-child {
+	margin: 0;
+	color: var(--texto-suave);
+	font-size: 0.92rem;
+}
+
+.grade-trajetorias {
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.cartao-trajetoria {
+	gap: 8px;
+	border-top: 2px solid var(--destaque);
+	box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+
+.cartao-cinema {
+	max-width: 420px;
+}
+
+.foto-atleta {
+	margin: -22px -22px 10px;
+}
+
+.foto-atleta img {
+	display: block;
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+	object-position: center 28%;
+	background: var(--superficie-2);
+}
+
+.foto-atleta figcaption {
+	padding: 7px 12px;
+	color: var(--texto-suave);
+	font-size: 0.72rem;
+	line-height: 1.4;
+}
+
+.foto-atleta figcaption a {
+	color: var(--destaque);
+}
+
+.cartao-trajetoria .origem {
+	margin: 0;
+}
+
+.secao-titulo {
+	font-size: 1.4rem;
+	margin: 46px 0 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--borda);
+}
+
+/* ---------- cartoes ---------- */
+
+.grade {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.cartao {
+	background: var(--superficie);
+	border: 1px solid var(--borda);
+	border-radius: 10px;
+	padding: 22px;
+	display: flex;
+	flex-direction: column;
+}
+
+.cartao:hover {
+	border-color: var(--destaque);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+	transform: translateY(-2px);
+}
+
+.cartao-thailandia {
+	background:
+		linear-gradient(180deg, transparent 0 94%, #a51931 94% 96%, #f4f5f8 96% 97%,
+			#2d2a4a 97% 99%, #f4f5f8 99% 100%),
+		linear-gradient(135deg, rgba(165, 25, 49, 0.12), rgba(45, 42, 74, 0.3));
+	border-color: rgba(165, 25, 49, 0.7);
+	box-shadow: inset 0 0 0 1px rgba(45, 42, 74, 0.35);
+}
+
+.cartao-thailandia .selo {
+	background: #2d2a4a;
+	color: #fff;
+	border-color: rgba(245, 245, 248, 0.55);
+}
+
+.cartao-brasil {
+	background:
+		linear-gradient(180deg, transparent 0 94%, #009739 94% 96%, #ffdf00 96% 98%, #002776 98% 100%),
+		linear-gradient(135deg, rgba(0, 151, 57, 0.16), rgba(0, 39, 118, 0.3));
+	border-color: rgba(0, 151, 57, 0.7);
+	box-shadow: inset 0 0 0 1px rgba(255, 223, 0, 0.12);
+}
+
+.cartao-brasil .selo {
+	background: #002776;
+	color: #fff;
+	border-color: rgba(255, 223, 0, 0.65);
+}
+
+.cartao-japao {
+	background:
+		linear-gradient(180deg, transparent 0 96%, #fff 96% 98%, #bc002d 98% 100%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(188, 0, 45, 0.18));
+	border-color: rgba(188, 0, 45, 0.65);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.cartao-japao .selo {
+	background: #bc002d;
+	color: #fff;
+	border-color: rgba(255, 255, 255, 0.45);
+}
+
+.cartao-coreia {
+	background:
+		linear-gradient(180deg, transparent 0 96%, #cd2e3a 96% 98%, #0047a0 98% 100%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(0, 71, 160, 0.2));
+	border-color: rgba(0, 71, 160, 0.65);
+	box-shadow: inset 0 0 0 1px rgba(205, 46, 58, 0.12);
+}
+
+.cartao-coreia .selo {
+	background: #0047a0;
+	color: #fff;
+	border-color: rgba(255, 255, 255, 0.45);
+}
+
+.cartao-inglaterra {
+	background:
+		linear-gradient(180deg, transparent 0 94%, #fff 94% 96%, #c8102e 96% 98%, #fff 98% 100%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(200, 16, 46, 0.2));
+	border-color: rgba(200, 16, 46, 0.65);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.cartao-inglaterra .selo {
+	background: #c8102e;
+	color: #fff;
+	border-color: rgba(255, 255, 255, 0.5);
+}
+
+.cartao-topo {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.cartao-topo .ano {
+	margin-left: auto;
+}
+
+.icone-arte {
+	display: inline-flex;
+	flex: 0 0 auto;
+	width: 46px;
+	height: 46px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--borda);
+	border-radius: 12px;
+	background: var(--superficie-2);
+	font-size: 1.6rem;
+	line-height: 1;
+}
+
+.icone-arte-grande {
+	width: 64px;
+	height: 64px;
+	margin-bottom: 14px;
+	font-size: 2.2rem;
+}
+
+.icone-secao {
+	display: inline-flex;
+	width: 1.5em;
+	height: 1.5em;
+	align-items: center;
+	justify-content: center;
+	margin-right: 6px;
+	border-radius: 7px;
+	background: var(--superficie-2);
+	color: var(--destaque);
+	font-size: 0.9em;
+	vertical-align: 0.08em;
+}
+
+.cartao h3 {
+	margin: 0 0 2px;
+	font-size: 1.3rem;
+}
+
+.cartao p {
+	color: var(--texto-suave);
+	font-size: 0.95rem;
+}
+
+.origem {
+	color: var(--destaque) !important;
+	font-size: 0.85rem !important;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin: 0 0 12px;
+}
+
+.origem-com-bandeira {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.bandeira {
+	display: inline-block;
+	flex: 0 0 auto;
+	width: 24px;
+	height: 16px;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.origem.grande {
+	font-size: 0.95rem;
+	margin-bottom: 14px;
+}
+
+.selo {
+	background: var(--superficie-2);
+	border: 1px solid var(--borda);
+	color: var(--texto-suave);
+	border-radius: 999px;
+	padding: 3px 12px;
+	font-size: 0.75rem;
+	letter-spacing: 0.05em;
+}
+
+.ano {
+	color: var(--texto-suave);
+	font-size: 0.8rem;
+}
+
+.mini-resumo {
+	display: flex;
+	gap: 14px;
+	font-size: 0.82rem;
+	margin-top: 4px;
+}
+
+.mini-forte {
+	color: var(--forte);
+}
+
+.mini-fraco {
+	color: var(--fraco);
+}
+
+.link-mais {
+	margin-top: auto;
+	padding-top: 16px;
+	color: var(--destaque);
+	text-decoration: none;
+	font-size: 0.92rem;
+	font-weight: 600;
+	text-shadow: 0 2px 12px rgba(212, 162, 78, 0.18);
+}
+
+.link-mais:hover {
+	text-decoration: underline;
+	text-shadow: 0 2px 14px rgba(212, 162, 78, 0.5);
+}
+
+/* ---------- detalhe ---------- */
+
+.voltar {
+	display: inline-block;
+	margin: 28px 0 8px;
+	color: var(--texto-suave);
+	text-decoration: none;
+	font-size: 0.92rem;
+}
+
+.voltar:hover {
+	color: var(--texto);
+}
+
+.cabecalho-pagina {
+	padding: 18px 0 30px;
+}
+
+.chamada-treino {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 22px;
+	border: 1px solid var(--borda);
+	border-left: 3px solid var(--destaque);
+	border-radius: 10px;
+	background: rgba(23, 26, 33, 0.94);
+}
+
+.chamada-treino h2,
+.chamada-treino p {
+	margin: 0;
+}
+
+.chamada-treino h2 {
+	margin-bottom: 6px;
+	font-size: 1.2rem;
+}
+
+.chamada-treino p:not(.chamada-etiqueta) {
+	color: var(--texto-suave);
+}
+
+.chamada-etiqueta {
+	margin-bottom: 6px !important;
+	color: var(--destaque);
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.cabecalho-treino {
+	padding: 24px 0 30px;
+}
+
+.cabecalho-treino h1 {
+	margin: 10px 0;
+	font-size: 2.3rem;
+}
+
+.aviso-treino {
+	margin: 0 0 36px;
+	padding: 18px 20px;
+	border: 1px solid rgba(209, 97, 95, 0.5);
+	border-left: 4px solid var(--fraco);
+	border-radius: 8px;
+	background: rgba(35, 25, 29, 0.94);
+	color: var(--texto);
+}
+
+.grade-etapas-treino {
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.etapa-treino {
+	gap: 10px;
+	background: rgba(23, 26, 33, 0.96);
+}
+
+.etapa-treino h3,
+.etapa-treino p {
+	margin: 0;
+}
+
+.etapa-treino h3 {
+	font-size: 1.05rem;
+}
+
+.etapa-treino p,
+.treino-especifico li,
+.duas-colunas .painel p {
+	color: var(--texto-suave);
+}
+
+.etapa-numero {
+	display: inline-flex;
+	width: 34px;
+	height: 34px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	background: var(--superficie-2);
+	color: var(--destaque);
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.treino-especifico {
+	background: rgba(23, 26, 33, 0.96);
+	border-left: 3px solid var(--destaque);
+}
+
+.treino-especifico h3 {
+	margin-top: 0;
+}
+
+.treino-especifico ul {
+	margin-bottom: 0;
+	padding-left: 22px;
+}
+
+.treino-especifico li {
+	margin: 10px 0;
+}
+
+.pagina-treino .duas-colunas {
+	align-items: stretch;
+}
+
+.pagina-treino .duas-colunas .painel {
+	background: rgba(23, 26, 33, 0.96);
+}
+
+.pagina-muay-thai .cabecalho-pagina-thailandia {
+	position: relative;
+	overflow: hidden;
+	margin: 18px 0 38px;
+	padding: 34px 30px 28px;
+	border: 1px solid rgba(245, 245, 248, 0.2);
+	border-radius: 14px;
+	background:
+		linear-gradient(135deg, rgba(165, 25, 49, 0.2), transparent 48%),
+		linear-gradient(225deg, rgba(45, 42, 74, 0.52), rgba(23, 26, 33, 0.96) 70%);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.pagina-muay-thai .cabecalho-pagina-thailandia::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 10px;
+	background: linear-gradient(
+		to bottom,
+		#a51931 0 20%,
+		#f4f5f8 20% 35%,
+		#2d2a4a 35% 65%,
+		#f4f5f8 65% 80%,
+		#a51931 80% 100%
+	);
+	content: "";
+}
+
+.pagina-muay-thai .cabecalho-pagina-thailandia .icone-arte-grande {
+	border-color: rgba(245, 245, 248, 0.32);
+	background: #2d2a4a;
+}
+
+.pagina-muay-thai .cabecalho-pagina-thailandia .selo {
+	border-color: rgba(245, 245, 248, 0.38);
+	background: #2d2a4a;
+	color: #fff;
+}
+
+.pagina-muay-thai .cabecalho-pagina-thailandia .origem {
+	color: #f0c8cf !important;
+}
+
+.pagina-muay-thai .secao-titulo {
+	border-bottom-color: rgba(165, 25, 49, 0.55);
+}
+
+.pagina-muay-thai .icone-secao {
+	background: #2d2a4a;
+	color: #fff;
+}
+
+.pagina-muay-thai .video-responsivo {
+	border-color: rgba(165, 25, 49, 0.7);
+	box-shadow: 0 0 0 3px rgba(45, 42, 74, 0.35);
+}
+
+.pagina-jiu-jitsu .cabecalho-pagina-brasil {
+	position: relative;
+	overflow: hidden;
+	margin: 18px 0 38px;
+	padding: 34px 30px 28px;
+	border: 1px solid rgba(255, 223, 0, 0.3);
+	border-radius: 14px;
+	background:
+		radial-gradient(ellipse at 78% 52%, rgba(0, 39, 118, 0.52) 0 12%, transparent 12.5%),
+		linear-gradient(135deg, rgba(0, 151, 57, 0.2), transparent 48%),
+		linear-gradient(225deg, rgba(0, 39, 118, 0.3), rgba(23, 26, 33, 0.97) 72%);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.pagina-jiu-jitsu .cabecalho-pagina-brasil::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 10px;
+	background: linear-gradient(
+		to bottom,
+		#009739 0 30%,
+		#ffdf00 30% 70%,
+		#002776 70% 100%
+	);
+	content: "";
+}
+
+.pagina-jiu-jitsu .cabecalho-pagina-brasil .icone-arte-grande {
+	border-color: rgba(255, 223, 0, 0.5);
+	background: #002776;
+}
+
+.pagina-jiu-jitsu .cabecalho-pagina-brasil .selo {
+	border-color: rgba(255, 223, 0, 0.65);
+	background: #002776;
+	color: #fff;
+}
+
+.pagina-jiu-jitsu .cabecalho-pagina-brasil .origem {
+	color: #a9e7bd !important;
+}
+
+.pagina-jiu-jitsu .secao-titulo {
+	border-bottom-color: rgba(0, 151, 57, 0.65);
+}
+
+.pagina-jiu-jitsu .icone-secao {
+	background: #002776;
+	color: #ffdf00;
+}
+
+.pagina-jiu-jitsu .video-responsivo {
+	border-color: rgba(0, 151, 57, 0.75);
+	box-shadow: 0 0 0 3px rgba(0, 39, 118, 0.35);
+}
+
+.pagina-japao .cabecalho-pagina-japao {
+	position: relative;
+	overflow: hidden;
+	margin: 18px 0 38px;
+	padding: 34px 30px 28px;
+	border: 1px solid rgba(188, 0, 45, 0.4);
+	border-radius: 14px;
+	background:
+		radial-gradient(circle at 88% 46%, rgba(188, 0, 45, 0.32) 0 8%, transparent 8.5%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent 48%),
+		linear-gradient(225deg, rgba(188, 0, 45, 0.16), rgba(23, 26, 33, 0.97) 72%);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.pagina-japao .cabecalho-pagina-japao::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 10px;
+	background: linear-gradient(to bottom, #fff 0 50%, #bc002d 50% 100%);
+	content: "";
+}
+
+.pagina-japao .cabecalho-pagina-japao .icone-arte-grande {
+	border-color: rgba(255, 255, 255, 0.35);
+	background: #bc002d;
+	color: #fff;
+}
+
+.pagina-japao .cabecalho-pagina-japao .selo {
+	border-color: rgba(255, 255, 255, 0.5);
+	background: #bc002d;
+	color: #fff;
+}
+
+.pagina-japao .cabecalho-pagina-japao .origem {
+	color: #f0c4ce !important;
+}
+
+.pagina-japao .secao-titulo {
+	border-bottom-color: rgba(188, 0, 45, 0.6);
+}
+
+.pagina-japao .icone-secao {
+	background: #bc002d;
+	color: #fff;
+}
+
+.pagina-japao .video-responsivo {
+	border-color: rgba(188, 0, 45, 0.7);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.pagina-coreia .cabecalho-pagina-coreia {
+	position: relative;
+	overflow: hidden;
+	margin: 18px 0 38px;
+	padding: 34px 30px 28px;
+	border: 1px solid rgba(0, 71, 160, 0.45);
+	border-radius: 14px;
+	background:
+		radial-gradient(ellipse at 86% 48%, rgba(205, 46, 58, 0.4) 0 5%, rgba(0, 71, 160, 0.42) 5.5% 10%, transparent 10.5%),
+		linear-gradient(135deg, rgba(0, 71, 160, 0.2), transparent 48%),
+		linear-gradient(225deg, rgba(205, 46, 58, 0.15), rgba(23, 26, 33, 0.97) 72%);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.pagina-coreia .cabecalho-pagina-coreia::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 10px;
+	background: linear-gradient(to bottom, #cd2e3a 0 50%, #0047a0 50% 100%);
+	content: "";
+}
+
+.pagina-coreia .cabecalho-pagina-coreia .icone-arte-grande {
+	border-color: rgba(255, 255, 255, 0.35);
+	background: #0047a0;
+	color: #fff;
+}
+
+.pagina-coreia .cabecalho-pagina-coreia .selo {
+	border-color: rgba(255, 255, 255, 0.5);
+	background: #0047a0;
+	color: #fff;
+}
+
+.pagina-coreia .cabecalho-pagina-coreia .origem {
+	color: #c4d9f4 !important;
+}
+
+.pagina-coreia .secao-titulo {
+	border-bottom-color: rgba(0, 71, 160, 0.65);
+}
+
+.pagina-coreia .icone-secao {
+	background: #0047a0;
+	color: #fff;
+}
+
+.pagina-coreia .video-responsivo {
+	border-color: rgba(0, 71, 160, 0.75);
+	box-shadow: 0 0 0 3px rgba(205, 46, 58, 0.22);
+}
+
+.pagina-inglaterra .cabecalho-pagina-inglaterra {
+	position: relative;
+	overflow: hidden;
+	margin: 18px 0 38px;
+	padding: 34px 30px 28px;
+	border: 1px solid rgba(200, 16, 46, 0.42);
+	border-radius: 14px;
+	background:
+		linear-gradient(90deg, transparent 0 48%, rgba(200, 16, 46, 0.22) 48% 52%, transparent 52%),
+		linear-gradient(0deg, transparent 0 42%, rgba(200, 16, 46, 0.22) 42% 58%, transparent 58%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(200, 16, 46, 0.15) 55%, rgba(23, 26, 33, 0.97) 82%);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.pagina-inglaterra .cabecalho-pagina-inglaterra::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 10px;
+	background: linear-gradient(
+		to bottom,
+		#fff 0 34%,
+		#c8102e 34% 66%,
+		#fff 66% 100%
+	);
+	content: "";
+}
+
+.pagina-inglaterra .cabecalho-pagina-inglaterra .icone-arte-grande {
+	border-color: rgba(255, 255, 255, 0.42);
+	background: #c8102e;
+	color: #fff;
+}
+
+.pagina-inglaterra .cabecalho-pagina-inglaterra .selo {
+	border-color: rgba(255, 255, 255, 0.55);
+	background: #c8102e;
+	color: #fff;
+}
+
+.pagina-inglaterra .cabecalho-pagina-inglaterra .origem {
+	color: #f0cbd2 !important;
+}
+
+.pagina-inglaterra .secao-titulo {
+	border-bottom-color: rgba(200, 16, 46, 0.62);
+}
+
+.pagina-inglaterra .icone-secao {
+	background: #c8102e;
+	color: #fff;
+}
+
+.pagina-inglaterra .video-responsivo {
+	border-color: rgba(200, 16, 46, 0.72);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.cabecalho-pagina h1 {
+	font-size: 2.3rem;
+	margin: 10px 0 6px;
+}
+
+.bloco {
+	margin-bottom: 46px;
+}
+
+.texto {
+	color: var(--texto-suave);
+	max-width: 760px;
+}
+
+.personagem-ficcao .secao-titulo {
+	margin-top: 0;
+}
+
+.personagem-cartao {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+	gap: 18px;
+	max-width: 760px;
+	border-left: 3px solid var(--destaque);
+}
+
+.personagem-simbolo {
+	display: inline-flex;
+	width: 58px;
+	height: 58px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--borda);
+	border-radius: 14px;
+	background: var(--superficie-2);
+	font-size: 2rem;
+}
+
+.personagem-etiqueta {
+	margin: 0 0 4px;
+	color: var(--destaque);
+	font-size: 0.78rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.personagem-cartao h3 {
+	margin: 0 0 6px;
+}
+
+.personagem-cartao p:last-child,
+.personagem-nota {
+	margin: 0;
+	color: var(--texto-suave);
+	font-size: 0.92rem;
+}
+
+.personagem-nota {
+	max-width: 760px;
+	margin-top: 10px;
+	font-size: 0.82rem;
+}
+
+.video-responsivo {
+	position: relative;
+	width: 100%;
+	max-width: 900px;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	border: 1px solid var(--borda);
+	border-radius: 10px;
+	background: #000;
+}
+
+.video-responsivo iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.video-nota {
+	color: var(--texto-suave);
+	font-size: 0.85rem;
+	margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+	.pagina-muay-thai .cabecalho-pagina-thailandia {
+		padding: 28px 20px 22px;
+	}
+
+	.pagina-jiu-jitsu .cabecalho-pagina-brasil {
+		padding: 28px 20px 22px;
+	}
+
+	.pagina-japao .cabecalho-pagina-japao,
+	.pagina-coreia .cabecalho-pagina-coreia,
+	.pagina-inglaterra .cabecalho-pagina-inglaterra {
+		padding: 28px 20px 22px;
+	}
+}
+
+.duas-colunas {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 22px;
+	margin-bottom: 46px;
+}
+
+.painel {
+	background: var(--superficie);
+	border: 1px solid var(--borda);
+	border-radius: 10px;
+	padding: 24px;
+}
+
+.painel h2 {
+	margin: 0 0 18px;
+	font-size: 1.2rem;
+}
+
+.painel-forte {
+	border-top: 3px solid var(--forte);
+}
+
+.painel-forte h2 {
+	color: var(--forte);
+}
+
+.painel-fraco {
+	border-top: 3px solid var(--fraco);
+}
+
+.painel-fraco h2 {
+	color: var(--fraco);
+}
+
+.destaque {
+	padding: 12px 0;
+	border-top: 1px solid var(--borda);
+}
+
+.destaque h3 {
+	margin: 0 0 4px;
+	font-size: 1rem;
+}
+
+.destaque p {
+	margin: 0;
+	color: var(--texto-suave);
+	font-size: 0.93rem;
+}
+
+/* ---------- tabela ---------- */
+
+.tabela-rolagem {
+	overflow-x: auto;
+	margin-bottom: 20px;
+}
+
+.tabela {
+	width: 100%;
+	border-collapse: collapse;
+	background: var(--superficie);
+	border: 1px solid var(--borda);
+}
+
+.tabela th,
+.tabela td {
+	padding: 13px 16px;
+	text-align: left;
+	border-bottom: 1px solid var(--borda);
+	font-size: 0.94rem;
+}
+
+.tabela th {
+	color: var(--texto-suave);
+	font-size: 0.78rem;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+}
+
+.tabela tr:last-child td {
+	border-bottom: none;
+}
+
+.tabela td.num {
+	text-align: center;
+	font-weight: 700;
+}
+
+.tabela td.forte {
+	color: var(--forte);
+}
+
+.tabela td.fraco {
+	color: var(--fraco);
+}
+
+.tabela a {
+	color: var(--destaque);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.tabela a:hover {
+	text-shadow: 0 2px 12px rgba(212, 162, 78, 0.55);
+}
+
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.formulario-recomendacao {
+	max-width: 860px;
+}
+
+.campos-grade {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px;
+}
+
+.campo {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.campo label {
+	font-weight: 600;
+}
+
+.campo-opcional,
+.ajuda-campo {
+	color: var(--texto-suave);
+	font-size: 0.85rem;
+	font-weight: 400;
+}
+
+.campo input,
+.campo select {
+	width: 100%;
+	min-height: 44px;
+	padding: 9px 12px;
+	border: 1px solid var(--borda);
+	border-radius: 6px;
+	background: var(--superficie);
+	color: var(--texto);
+	font: inherit;
+}
+
+.campo input:focus,
+.campo select:focus {
+	outline: 2px solid var(--destaque);
+	outline-offset: 2px;
+}
+
+.aviso-privacidade {
+	margin-top: 18px;
+	max-width: 720px;
+}
+
+.erro-campo {
+	color: #ff938f;
+	font-size: 0.85rem;
+}
+
+.opcao-checkbox {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin-top: 22px;
+	color: var(--texto-suave);
+}
+
+.opcao-checkbox input {
+	margin-top: 6px;
+	accent-color: var(--destaque);
+}
+
+.botao-enviar {
+	border: 0;
+	cursor: pointer;
+	font: inherit;
+	font-weight: 600;
+}
+
+.botao-enviar:hover {
+	box-shadow: 0 8px 20px rgba(212, 162, 78, 0.3);
+	transform: translateY(-2px);
+}
+
+.erros-formulario {
+	margin: 20px 0;
+	padding: 14px 18px;
+	border-left: 3px solid var(--fraco);
+	background: var(--superficie);
+	color: var(--texto);
+}
+
+.erros-formulario p,
+.erros-formulario ul {
+	margin: 4px 0;
+}
+
+.resultado-recomendacao {
+	margin-top: 48px;
+}
+
+.cartao-recomendado {
+	max-width: 700px;
+	border-color: var(--destaque);
+}
+
+.grade-lojas {
+	margin-bottom: 32px;
+}
+
+.cartao-loja {
+	min-height: 260px;
+}
+
+.cartao-loja h3 {
+	margin-top: 14px;
+}
+
+.selo-categoria {
+	display: inline-block;
+	align-self: flex-start;
+	margin-bottom: 6px;
+	color: var(--destaque);
+}
+
+.icone-loja {
+	display: inline-flex;
+	width: 52px;
+	height: 52px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--borda);
+	border-radius: 12px;
+	background: var(--superficie-2);
+	font-size: 1.8rem;
+}
+
+.aviso-compras {
+	margin: 36px 0;
+	padding: 22px;
+	border: 1px solid var(--borda);
+	border-left: 3px solid var(--destaque);
+	border-radius: 10px;
+	background: var(--superficie);
+}
+
+.aviso-compras h2 {
+	margin-top: 0;
+}
+
+.perfil-resumo,
+.observacoes-recomendacao {
+	max-width: 860px;
+	margin-top: 24px;
+	padding: 20px;
+	border: 1px solid var(--borda);
+	border-radius: 10px;
+	background: var(--superficie);
+}
+
+.perfil-resumo h3,
+.observacoes-recomendacao h3,
+.alternativas-recomendacao h3 {
+	margin-top: 0;
+}
+
+.perfil-resumo p,
+.observacoes-recomendacao li,
+.observacoes-recomendacao p {
+	color: var(--texto-suave);
+}
+
+.separador-perfil {
+	padding: 0 8px;
+	color: var(--destaque);
+}
+
+.observacoes-recomendacao ul {
+	padding-left: 22px;
+}
+
+.alternativas-recomendacao {
+	margin-top: 24px;
+}
+
+.chip {
+	background: var(--superficie);
+	border: 1px solid var(--borda);
+	border-radius: 999px;
+	padding: 8px 18px;
+	color: var(--texto-suave);
+	text-decoration: none;
+	font-size: 0.88rem;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+}
+
+.chip:hover {
+	border-color: var(--destaque);
+	color: var(--texto);
+	box-shadow: 0 6px 16px rgba(212, 162, 78, 0.18);
+	transform: translateY(-1px);
+}
+
+.lista {
+	color: var(--texto-suave);
+	max-width: 700px;
+}
+
+.lista li {
+	margin-bottom: 8px;
+}
+
+.vazio {
+	color: var(--texto-suave);
+	padding: 30px 0;
+}
+
+/* ---------- rodape ---------- */
+
+.rodape {
+	border-top: 1px solid var(--borda);
+	background: var(--superficie);
+	margin-top: 60px;
+	padding: 28px 0;
+	color: var(--texto-suave);
+	font-size: 0.9rem;
+}
+
+.rodape p {
+	margin: 0 0 4px;
+}
+
+.rodape .nota {
+	font-size: 0.82rem;
+	opacity: 0.75;
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 760px) {
+	.hero {
+		padding-top: 44px;
+	}
+
+	.hero h1 {
+		font-size: 2rem;
+	}
+
+	.duas-colunas {
+		grid-template-columns: 1fr;
+	}
+
+	.numeros {
+		gap: 26px;
+	}
+
+	.campos-grade {
+		grid-template-columns: 1fr;
+	}
+
+	.botao-secundario {
+		margin-left: 0;
+	}
+
+	.chamada-treino {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.separador-perfil {
+		display: none;
+	}
+}
