@@ -637,13 +637,13 @@ h1, h2, h3 {
 	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
 }
 
-.pagina-muay-thai {
+.pagina-detalhe {
 	position: relative;
 	z-index: 0;
 	isolation: isolate;
 }
 
-.pagina-muay-thai .muay-thai-fundo-video {
+.pagina-detalhe .video-fundo-modalidade {
 	position: fixed;
 	z-index: -1;
 	inset: 0;
@@ -652,14 +652,14 @@ h1, h2, h3 {
 	background: #0f1115;
 }
 
-.pagina-muay-thai .muay-thai-fundo-video::after {
+.pagina-detalhe .video-fundo-modalidade::after {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(180deg, rgba(15, 17, 21, 0.68), rgba(15, 17, 21, 0.88));
 	content: "";
 }
 
-.pagina-muay-thai .muay-thai-fundo-video iframe {
+.pagina-detalhe .video-fundo-modalidade iframe {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -1030,7 +1030,7 @@ h1, h2, h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.pagina-muay-thai .muay-thai-fundo-video iframe {
+	.pagina-detalhe .video-fundo-modalidade iframe {
 		display: none;
 	}
 }
