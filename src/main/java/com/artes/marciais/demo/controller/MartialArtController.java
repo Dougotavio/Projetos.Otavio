@@ -2,6 +2,9 @@ package com.artes.marciais.demo.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,24 +68,33 @@ public class MartialArtController {
 	}
 
 	@GetMapping("/artes/{slug}")
-	public String detalhe(@PathVariable String slug, Model model) {
+	public String detalhe(@PathVariable String slug, Model model, HttpServletResponse response) {
 		return service.buscarPorSlug(slug)
 				.map(arte -> {
 					model.addAttribute("arte", arte);
 					model.addAttribute("outras", outras(arte));
 					return "detalhe";
 				})
-				.orElse("erro/404");
+				.orElseGet(() -> naoEncontrado(response));
 	}
 
 	@GetMapping("/artes/{slug}/treino")
-	public String treino(@PathVariable String slug, Model model) {
+	public String treino(@PathVariable String slug, Model model, HttpServletResponse response) {
 		return service.buscarPorSlug(slug)
 				.map(arte -> {
 					model.addAttribute("arte", arte);
 					return "treino";
 				})
-				.orElse("erro/404");
+				.orElseGet(() -> naoEncontrado(response));
+	}
+
+	/**
+	 * Renderiza a pagina de erro com status HTTP 404, para que um slug
+	 * inexistente nao seja respondido como 200 OK.
+	 */
+	private String naoEncontrado(HttpServletResponse response) {
+		response.setStatus(HttpStatus.NOT_FOUND.value());
+		return "erro/404";
 	}
 
 	private List<MartialArt> outras(MartialArt atual) {

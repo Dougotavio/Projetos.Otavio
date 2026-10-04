@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.ui.ExtendedModelMap;
 
 import com.artes.marciais.demo.controller.MartialArtController;
@@ -82,13 +83,25 @@ class DemoApplicationTests {
 		for (String slug : slugs) {
 			ExtendedModelMap model = new ExtendedModelMap();
 
-			assertThat(controller.treino(slug, model)).isEqualTo("treino");
+			assertThat(controller.treino(slug, model, new MockHttpServletResponse())).isEqualTo("treino");
 			assertThat(model.get("arte")).isEqualTo(service.buscarPorSlug(slug).orElseThrow());
 		}
 
 		ExtendedModelMap modelInvalido = new ExtendedModelMap();
-		assertThat(controller.treino("inexistente", modelInvalido)).isEqualTo("erro/404");
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		assertThat(controller.treino("inexistente", modelInvalido, response)).isEqualTo("erro/404");
+		assertThat(response.getStatus()).isEqualTo(404);
 		assertThat(modelInvalido).doesNotContainKey("arte");
+	}
+
+	@Test
+	void slugInexistenteRespondeComStatus404() {
+		MartialArtController controller = new MartialArtController(service);
+		MockHttpServletResponse response = new MockHttpServletResponse();
+
+		assertThat(controller.detalhe("inexistente", new ExtendedModelMap(), response))
+				.isEqualTo("erro/404");
+		assertThat(response.getStatus()).isEqualTo(404);
 	}
 
 	@Test
