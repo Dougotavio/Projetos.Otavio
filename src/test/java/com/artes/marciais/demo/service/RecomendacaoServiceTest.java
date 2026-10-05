@@ -14,8 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import com.artes.marciais.demo.model.Contato;
+import com.artes.marciais.demo.model.Experiencia;
+import com.artes.marciais.demo.model.Genero;
 import com.artes.marciais.demo.model.MartialArt;
+import com.artes.marciais.demo.model.Objetivo;
 import com.artes.marciais.demo.model.PerfilRecomendacao;
+import com.artes.marciais.demo.model.Preferencia;
 import com.artes.marciais.demo.repository.MartialArtRepository;
 import com.artes.marciais.demo.service.RecomendacaoService.Resultado;
 
@@ -33,6 +38,95 @@ class RecomendacaoServiceTest {
 		MartialArtRepository repository = new MartialArtRepository.InMemory();
 		service = new RecomendacaoService(new MartialArtService(repository));
 		catalogo = repository.findAll();
+	}
+
+	@Nested
+	@DisplayName("enums")
+	class Enums {
+
+		@Test
+		void todoEnumTemRotuloPreenchido() {
+			for (Objetivo objetivo : Objetivo.values()) {
+				assertThat(objetivo.getRotulo()).isNotBlank();
+			}
+			for (Preferencia preferencia : Preferencia.values()) {
+				assertThat(preferencia.getRotulo()).isNotBlank();
+			}
+			for (Genero genero : Genero.values()) {
+				assertThat(genero.getRotulo()).isNotBlank();
+			}
+			for (Experiencia experiencia : Experiencia.values()) {
+				assertThat(experiencia.getRotulo()).isNotBlank();
+			}
+			for (Contato contato : Contato.values()) {
+				assertThat(contato.getRotulo()).isNotBlank();
+			}
+		}
+
+		@Test
+		void todaPreferenciaComPontosApontaParaUmaArteDoCatalogo() {
+			List<String> slugs = catalogo.stream().map(MartialArt::slug).toList();
+
+			for (Preferencia preferencia : Preferencia.values()) {
+				if (preferencia != Preferencia.SEM_PREFERENCIA) {
+					assertThat(preferencia.getArteFavorita())
+							.as("arte de %s", preferencia)
+							.isIn(slugs);
+					assertThat(preferencia.getPontos()).isPositive();
+				}
+			}
+		}
+
+		@Test
+		void todoObjetivoApontaParaArtesConhecidas() {
+			List<String> slugs = catalogo.stream().map(MartialArt::slug).toList();
+
+			for (Objetivo objetivo : Objetivo.values()) {
+				assertThat(objetivo.getArtes()).isNotEmpty();
+				assertThat(objetivo.getArtes()).allMatch(slugs::contains);
+			}
+		}
+
+		@ParameterizedTest
+		@ValueSource(strings = { "ROBOTICA", "MULHER", "" })
+		void generoDesconhecidoCaiNoPadrao(String valor) {
+			Genero resolvido = Genero.de(valor);
+
+			assertThat(resolvido).isNotNull();
+		}
+
+		@Test
+		void generoValidoEResolvidoPeloNome() {
+			assertThat(Genero.de("MULHER")).isEqualTo(Genero.MULHER);
+			assertThat(Genero.de("  mulher ")).isEqualTo(Genero.MULHER);
+			assertThat(Genero.de("ROBOTICA")).isEqualTo(Genero.PREFIRO_NAO_INFORMAR);
+			assertThat(Genero.de(null)).isEqualTo(Genero.PREFIRO_NAO_INFORMAR);
+		}
+
+		@Test
+		void preferenciaDesconhecidaNaoLancaExcecao() {
+			assertThat(Preferencia.de("TELEPORTACAO")).isEqualTo(Preferencia.SEM_PREFERENCIA);
+			assertThat(Preferencia.de(null)).isEqualTo(Preferencia.SEM_PREFERENCIA);
+		}
+
+		@Test
+		void catalogoVazioLancaExcecaoClara() {
+			MartialArtRepository vazio = new MartialArtRepository() {
+				@Override
+				public List<MartialArt> findAll() {
+					return List.of();
+				}
+
+				@Override
+				public java.util.Optional<MartialArt> findBySlug(String slug) {
+					return java.util.Optional.empty();
+				}
+			};
+			RecomendacaoService serviceVazio = new RecomendacaoService(new MartialArtService(vazio));
+
+			assertThatThrownBy(() -> serviceVazio.recomendar(perfilValido()))
+					.isInstanceOf(java.util.NoSuchElementException.class);
+		}
 	}
 
 	@Nested

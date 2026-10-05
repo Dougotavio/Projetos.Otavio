@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Simulação de duelo', 'Simule qual arte marcial levaria a melhor em um confronto e veja por que: distancia, clinch, projecoes e trabalho no chao.')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container portal-page portal-simulacao">
+
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Confronto direto</p>
+			<h1>Simulação de duelo</h1>
+			<p>Escolha duas artes e veja qual levaria vantagem em um confronto ideal, considerando
+				distância, clinch, projeções e trabalho no chão.</p>
+			<a class="portal-botao" href="#formulario-simulacao">Simular duelo <span aria-hidden="true">›</span></a>
+		</div>
+	</section>
+
+	<form id="formulario-simulacao" class="formulario-recomendacao" th:action="@{/simulacao}" method="post">
+		<section class="bloco">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">⚔</span> Escolha os lados</h2>
+			<div class="campos-grade">
+				<div class="campo">
+					<label for="primeira">Primeira arte</label>
+					<select id="primeira" name="primeira">
+						<option th:each="arte : ${artes}" th:value="${arte.slug()}"
+							th:text="${arte.nome}" th:selected="${arte.slug() == selecionadaPrimeira}">
+							Judo
+						</option>
+					</select>
+				</div>
+				<div class="campo">
+					<label for="segunda">Segunda arte</label>
+					<select id="segunda" name="segunda">
+						<option th:each="arte : ${artes}" th:value="${arte.slug()}"
+							th:text="${arte.nome}" th:selected="${arte.slug() == selecionadaSegunda}">
+							Karate
+						</option>
+					</select>
+				</div>
+			</div>
+			<button class="botao botao-enviar" type="submit">Simular confronto</button>
+		</section>
+	</form>
+
+	<div class="erros-formulario" th:if="${erroSimulacao != null}">
+		<p th:text="${erroSimulacao}">Escolha duas artes diferentes.</p>
+	</div>
+
+	<section class="bloco resultado-simulacao" th:if="${resultado != null}">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Resultado</h2>
+
+		<div class="duelo-placar">
+			<article class="cartao cartao-lado" th:classappend="${resultado.vencedor.name() == 'PRIMEIRA'} ? ' duelo-vencedor'">
+				<div class="cartao-topo">
+					<span class="icone-arte" role="img"
+						th:aria-label="'Simbolo de ' + ${resultado.artePrimeira.nome()}"
+						th:text="${resultado.artePrimeira.icone()}">🤼</span>
+					<span class="selo" th:text="${resultado.artePrimeira.disciplina().rotulo}">Throwing</span>
+				</div>
+				<h3 th:text="${resultado.artePrimeira.nome()}">Judo</h3>
+				<p th:text="${resultado.artePrimeira.resumo()}">Resumo da arte.</p>
+				<p class="duelo-pontos">
+					<strong th:text="${resultado.pontosPrimeira}">28</strong> pontos
+				</p>
+				<a class="link-mais" th:href="@{'/artes/' + ${resultado.artePrimeira.slug()}}">
+					Conhecer a arte &rarr;
+				</a>
+			</article>
+
+			<div class="duelo-centro">
+				<span class="duelo-versus" aria-hidden="true">vs</span>
+				<span class="duelo-vencedor-rotulo" th:text="${resultado.vencedor.rotulo}">
+					Duelo equilibrado
+				</span>
+			</div>
+
+			<article class="cartao cartao-lado" th:classappend="${resultado.vencedor.name() == 'SEGUNDA'} ? ' duelo-vencedor'">
+				<div class="cartao-topo">
+					<span class="icone-arte" role="img"
+						th:aria-label="'Simbolo de ' + ${resultado.arteSegunda.nome()}"
+						th:text="${resultado.arteSegunda.icone()}">🥋</span>
+					<span class="selo" th:text="${resultado.arteSegunda.disciplina().rotulo}">Grappling</span>
+				</div>
+				<h3 th:text="${resultado.arteSegunda.nome()}">Brazilian Jiu-Jitsu</h3>
+				<p th:text="${resultado.arteSegunda.resumo()}">Resumo da arte.</p>
+				<p class="duelo-pontos">
+					<strong th:text="${resultado.pontosSegunda}">24</strong> pontos
+				</p>
+				<a class="link-mais" th:href="@{'/artes/' + ${resultado.arteSegunda.slug()}}">
+					Conhecer a arte &rarr;
+				</a>
+			</article>
+		</div>
+
+		<p class="aviso-simulacao" th:text="${resultado.distanciaFavoravel}">
+			A arte trabalha melhor a distancia longa.
+		</p>
+
+		<section class="observacoes-recomendacao">
+			<h3>Como interpretar</h3>
+			<ul>
+				<li th:each="conselho : ${resultado.conselhos}" th:text="${conselho}">
+					Conselho tático.
+				</li>
+			</ul>
+			<p>Os pontos comparam atributos técnicos fixos de cada arte. Não representam
+				nível de lutador, e um confronto real depende de treino, condicionamento,
+				regras e segurança.</p>
+		</section>
+	</section>
+
+	<section class="bloco portal-info-card">
+		<h2 class="secao-titulo">As quatro distâncias</h2>
+		<p class="texto">O resultado muda conforme a distância do combate. É aí que a maioria
+			dos estilos decide o confronto: manter o oponente longe ou levar a luta para
+			dentro muda completamente a arte vencedora.</p>
+		<div class="chips">
+			<span class="chip" th:each="d : ${distancias}" th:text="${d.nome} + ' - ' + ${d.descricao}">
+				Longa - Somente socos.
+			</span>
+		</div>
+	</section>
+
+	<section class="aviso-compras">
+		<h2><span class="icone-secao" aria-hidden="true">ℹ</span> Antes de concluir</h2>
+		<ul class="lista">
+			<li>Esta simulação compara técnicas, não pessoas: dois praticantes da mesma arte podem ter resultados opostos.</li>
+			<li>Regras de competição normalmente proíbem golpes após o nocaute ou quando alguém vai ao chão fora do aspecto do combate.</li>
+			<li>A simulação não prevê lesões, <strong>não é conselho de combate</strong> e não substitui orientação de um professor qualificado.</li>
+			<li>Prática de luta exige academia, equipamento adequado e acompanhamento de profissional.</li>
+		</ul>
+	</section>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

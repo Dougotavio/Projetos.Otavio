@@ -58,6 +58,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!--
+						Executa os testes no proprio processo do Maven.
+
+						Com fork, o processo filho pode herdar um JAVA_HOME de
+						versao diferente da do build e falhar com
+						UnsupportedClassVersionError ao carregar o JUnit.
+						Como o projeto exige Java 25, forkCount=0 garante que
+						os testes rodem sempre na mesma JVM do build.
+					-->
+					<forkCount>0</forkCount>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

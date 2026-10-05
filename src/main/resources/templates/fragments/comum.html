@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head(titulo)">
+<head th:fragment="head(titulo, descricao)">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title th:text="${titulo} + ' | Artes Marciais'">Artes Marciais</title>
-	<link rel="icon" type="image/png" sizes="128x128" th:href="@{/images/logo.png}">
-	<link rel="apple-touch-icon" th:href="@{/images/logo.png}">
+	<meta name="description" th:content="${descricao}">
+	<link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+	<link rel="apple-touch-icon" th:href="@{/apple-touch-icon.png}">
 	<link rel="stylesheet" th:href="@{/css/estilo.css}">
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Artes Marciais">
+	<meta property="og:title" th:content="${titulo}">
+	<meta property="og:description" th:content="${descricao}">
+	<meta property="og:image" th:content="@{/images/logo-96.png}">
+	<meta property="og:locale" content="pt_BR">
+	<meta name="twitter:card" content="summary">
 </head>
 
 <body>
@@ -15,13 +24,15 @@
 <header th:fragment="cabecalho" class="cabecalho">
 	<div class="container">
 		<a class="marca" th:href="@{/}">
-			<img class="marca-icone" th:src="@{/images/logo.png}" alt="Logo Artes Marciais">
+			<img class="marca-icone" th:src="@{/images/logo-96.png}" width="48" height="48" alt="Logo Artes Marciais">
 			<span>Artes<strong>Marciais</strong></span>
 		</a>
 		<nav>
 			<a th:href="@{/}">Inicio</a>
 			<a th:href="@{/artes}">Artes</a>
 			<a th:href="@{/recomendacao}">Encontre sua arte</a>
+			<a th:href="@{/simulacao}">Simulação</a>
+			<a th:href="@{/academias}">Academias</a>
 			<a th:href="@{/roupas}">Roupas</a>
 			<a th:href="@{/lojas}">Equipamentos</a>
 			<a th:href="@{/comparativo}">Comparativo</a>

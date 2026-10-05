@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Academias', 'Mapa das academias de artes marciais na Grande Sao Paulo, com filtro por modalidade e por cidade.')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container portal-page portal-academias">
+
+	<section class="portal-hero">
+		<img class="portal-hero-imagem" th:src="@{/images/home/hero.jpg}" alt="">
+		<div class="portal-hero-conteudo">
+			<p class="portal-etiqueta">Treine perto de você</p>
+			<h1>Academias</h1>
+			<p>Veja onde prática cada arte marcial na região. Filtre por modalidade
+				ou por cidade para estreitar a busca.</p>
+			<a class="portal-botao" href="#mapa-academias">Ver o mapa <span aria-hidden="true">›</span></a>
+		</div>
+	</section>
+
+	<section class="bloco aviso-exemplo">
+		<h2><span class="icone-secao" aria-hidden="true">⚠</span> Dados de exemplo</h2>
+		<p>As academias listadas aqui são <strong>fictícias</strong> e servem só para
+			mostrar como o mapa funciona. Nomes, endereços e telefones não existem, e
+			nenhuma dessas academias realmente ensina as artes citadas.</p>
+		<p>Para encontrar academias de verdade, procure por redes sociais, confere o
+			endereço com a própria academia antes de ir e peça uma aula experimental.</p>
+	</section>
+
+	<form class="formulario-recomendacao filtros-academias" th:action="@{/academias}" method="get">
+		<section class="bloco">
+			<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">◎</span> Filtros</h2>
+
+			<div class="campo campo-cidade">
+				<label for="cidade">Cidade</label>
+				<select id="cidade" name="cidade">
+					<option value="todas" th:selected="${cidadeSelecionada == 'todas'}">Todas as cidades</option>
+					<option th:each="c : ${cidades}" th:value="${c}" th:text="${c}"
+						th:selected="${c == cidadeSelecionada}">Sao Paulo</option>
+				</select>
+			</div>
+
+			<fieldset class="filtro-artes">
+				<legend>Modalidades</legend>
+				<p class="ajuda-campo">Marque uma ou mais artes para filtrar as academias no mapa.</p>
+				<div class="grade-filtros">
+					<label class="badge-filtro" th:each="a : ${artes}"
+						th:classappend="${a[2]} ? ' badge-ativo'">
+						<input type="checkbox" name="arte" th:value="${a[0]}" th:checked="${a[2]}">
+						<span th:text="${a[1]}">Judo</span>
+					</label>
+				</div>
+			</fieldset>
+
+			<div class="acoes-filtros">
+				<button class="botao botao-enviar" type="submit">Aplicar filtros</button>
+				<a class="botao-secundario" th:href="@{/academias}">Limpar</a>
+			</div>
+		</section>
+	</form>
+
+	<section id="mapa-academias" class="bloco">
+		<h2 class="secao-titulo">
+			<span class="icone-secao" aria-hidden="true">◎</span>
+			<span th:text="${total} + ' academias no mapa'">12 academias no mapa</span>
+		</h2>
+
+		<p class="vazio" th:if="${total == 0}">
+			Nenhuma academia encontrada com esses filtros. Tente escolher outra modalidade ou cidade.
+		</p>
+
+		<div class="mapa-linha" th:if="${total > 0}">
+			<div class="marea-academia">
+				<ul class="lista-academias">
+					<li class="item-academia" th:each="a : ${academias}"
+						th:attr="data-slug=${a.slug()}">
+						<h3 th:text="${a.nome}">Dojo Bela Vista</h3>
+						<p class="origem" th:text="${a.bairro}">Bela Vista, Sao Paulo</p>
+						<p class="mini-resumo">
+							<span class="selo" th:each="s : ${a.artes()}"
+								th:text="${nomeDasArtes[s]}">Judo</span>
+						</p>
+						<a class="link-mais" th:href="${a.googleMapsUrl()}"
+							target="_blank" rel="noopener noreferrer">Ver no mapa &rarr;</a>
+					</li>
+				</ul>
+			</div>
+
+			<div id="mapa" class="mapa" role="region"
+				aria-label="Mapa das academias da Grande Sao Paulo"></div>
+		</div>
+	</section>
+
+	<section class="aviso-compras">
+		<h2><span class="icone-secao" aria-hidden="true">ℹ</span> Como escolher</h2>
+		<ul class="lista">
+			<li>Confirme se a academia realmente ensina a modalidade que você procura; o nome pode variar.</li>
+			<li>Agende uma aula experimental antes de firmar contrato.</li>
+			<li>Verifique horários, mensalidade e se há aula para iniciantes sem experiência.</li>
+			<li>Este projeto não recebe comissão por indicação e não recomenda academias específicas.</li>
+		</ul>
+	</section>
+
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+	integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+	integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var academias = /*[[${academias}]]*/ [];
+
+	var mapa = L.map('mapa').setView([-23.55, -46.63], 10);
+	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(mapa);
+
+	academias.forEach(function (a) {
+		L.circleMarker([a.latitude, a.longitude], {
+			radius: 8,
+			color: '#ed1c2e',
+			weight: 2,
+			fillColor: '#ed1c2e',
+			fillOpacity: 0.75
+		})
+			.addTo(mapa)
+			.bindPopup('<strong>' + a.nome + '</strong><br>' + a.bairro);
+	});
+
+	if (academias.length > 0) {
+		var grupo = L.featureGroup(academias.map(function (a) {
+			return L.latLng(a.latitude, a.longitude);
+		}));
+		mapa.fitBounds(grupo.getBounds().pad(0.2));
+	}
+	/*]]>*/
+</script>
+
+</body>
+
+</html>

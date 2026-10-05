@@ -1,6 +1,7 @@
 package com.artes.marciais.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,7 +31,7 @@ public class MartialArtController {
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("artes", service.listarTodas());
-		model.addAttribute("total", service.listarTodas().size());
+		model.addAttribute("total", service.totalDeArtes());
 		model.addAttribute("maisAntiga", service.maisAntiga());
 		model.addAttribute("maisRecente", service.maisRecente());
 		return "home";
@@ -51,7 +52,7 @@ public class MartialArtController {
 
 	@GetMapping("/sobre")
 	public String sobre(Model model) {
-		model.addAttribute("total", service.listarTodas().size());
+		model.addAttribute("total", service.totalDeArtes());
 		return "sobre";
 	}
 
@@ -61,9 +62,13 @@ public class MartialArtController {
 	}
 
 	@GetMapping("/artes/disciplina/{disciplina}")
-	public String porDisciplina(@PathVariable Disciplina disciplina, Model model) {
-		model.addAttribute("artes", service.listarPorDisciplina(disciplina));
-		model.addAttribute("disciplina", disciplina);
+	public String porDisciplina(@PathVariable String disciplina, Model model, HttpServletResponse response) {
+		Optional<Disciplina> escolhida = DisciplineParser.buscar(disciplina);
+		if (escolhida.isEmpty()) {
+			return naoEncontrado(response);
+		}
+		model.addAttribute("artes", service.listarPorDisciplina(escolhida.get()));
+		model.addAttribute("disciplina", escolhida.get());
 		return "lista";
 	}
 
@@ -72,7 +77,7 @@ public class MartialArtController {
 		return service.buscarPorSlug(slug)
 				.map(arte -> {
 					model.addAttribute("arte", arte);
-					model.addAttribute("outras", outras(arte));
+					model.addAttribute("outras", service.outras(arte));
 					return "detalhe";
 				})
 				.orElseGet(() -> naoEncontrado(response));
@@ -95,11 +100,5 @@ public class MartialArtController {
 	private String naoEncontrado(HttpServletResponse response) {
 		response.setStatus(HttpStatus.NOT_FOUND.value());
 		return "erro/404";
-	}
-
-	private List<MartialArt> outras(MartialArt atual) {
-		return service.listarTodas().stream()
-				.filter(arte -> !arte.slug().equals(atual.slug()))
-				.toList();
 	}
 }

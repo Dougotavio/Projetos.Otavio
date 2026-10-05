@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/comum :: head('Inicio')}"></head>
+<head th:replace="~{fragments/comum :: head('Inicio', 'Catalogo comparativo de artes marciais: historia, origem, pontos fortes e pontos fracos de cada modalidade, com quiz de recomendacao.')}"></head>
 
 <body>
 
@@ -42,7 +42,9 @@
 				<a class="inicio-arte-imagem" th:href="@{'/artes/' + ${arte.slug}}"
 					th:classappend="' inicio-imagem-' + ${arte.slug}">
 					<img th:src="@{'/images/home/' + ${arte.slug} + '.jpg'}"
-						th:alt="'Praticantes de ' + ${arte.nome}" loading="lazy" decoding="async">
+							th:srcset="'/images/home/' + ${arte.slug} + '-2x.jpg 2x'"
+						th:alt="'Praticantes de ' + ${arte.nome}" width="400" height="356"
+						loading="lazy" decoding="async">
 				</a>
 				<h2 th:text="${arte.nome}">Boxe</h2>
 				<p class="inicio-arte-resumo" th:text="${arte.resumo}">Resumo da modalidade.</p>

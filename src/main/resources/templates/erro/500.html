@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Erro inesperado', 'Ocorreu um erro inesperado ao processar sua requisicao. Tente novamente em instantes ou volte para a pagina inicial.')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+	<section class="cabecalho-pagina">
+		<h1>500</h1>
+		<p class="subtitulo">Algo deu errado do nosso lado. Tente novamente em instantes.</p>
+		<a class="botao" th:href="@{/}">Voltar para o inicio</a>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

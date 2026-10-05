@@ -4,28 +4,23 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 
+import com.artes.marciais.demo.model.Contato;
+import com.artes.marciais.demo.model.Experiencia;
+import com.artes.marciais.demo.model.Genero;
 import com.artes.marciais.demo.model.MartialArt;
+import com.artes.marciais.demo.model.Objetivo;
 import com.artes.marciais.demo.model.PerfilRecomendacao;
+import com.artes.marciais.demo.model.Preferencia;
 
 @Service
 public class RecomendacaoService {
-
-	private static final Set<String> GENEROS = Set.of(
-			"MULHER", "HOMEM", "NAO_BINARIO", "PREFIRO_NAO_INFORMAR");
-	private static final Set<String> OBJETIVOS = Set.of(
-			"DEFESA_PESSOAL", "CONDICIONAMENTO", "DISCIPLINA", "COMPETICAO");
-	private static final Set<String> PREFERENCIAS = Set.of(
-			"CHUTES", "GOLPES_VARIADOS", "ATAQUE_AGRESSIVO", "DEFESA_CONTROLE",
-			"PROJECOES", "LUTA_NO_SOLO", "SEM_PREFERENCIA");
-	private static final Set<String> EXPERIENCIAS = Set.of(
-			"INICIANTE", "INTERMEDIARIO", "AVANCADO");
-	private static final Set<String> CONTATOS = Set.of(
-			"LEVE", "MODERADO", "INTENSO");
 
 	private final MartialArtService martialArtService;
 
@@ -46,41 +41,97 @@ public class RecomendacaoService {
 				|| perfil.getPesoKg() < 15 || perfil.getPesoKg() > 300) {
 			erros.put("pesoKg", "Informe um peso entre 15 e 300 kg.");
 		}
-		validarOpcao("genero", perfil.getGenero(), GENEROS, erros);
-		validarOpcao("objetivo", perfil.getObjetivo(), OBJETIVOS, erros);
-		validarOpcao("preferencia", perfil.getPreferencia(), PREFERENCIAS, erros);
-		validarOpcao("experiencia", perfil.getExperiencia(), EXPERIENCIAS, erros);
-		validarOpcao("contato", perfil.getContato(), CONTATOS, erros);
+		validarOpcao("genero", perfil.getGenero(), RecomendacaoService::generoValido, erros);
+		validarOpcao("objetivo", perfil.getObjetivo(), RecomendacaoService::objetivoValido, erros);
+		validarOpcao("preferencia", perfil.getPreferencia(), e -> Preferencia.de(e) != Preferencia.SEM_PREFERENCIA
+				|| "SEM_PREFERENCIA".equalsIgnoreCase(e.trim()), erros);
+		validarOpcao("experiencia", perfil.getExperiencia(), RecomendacaoService::experienciaValida, erros);
+		validarOpcao("contato", perfil.getContato(), RecomendacaoService::contatoValido, erros);
 		return erros;
 	}
 
+	private static boolean objetivoValido(String valor) {
+		return objetivoDe(valor) != null;
+	}
+
+	private static boolean generoValido(String valor) {
+		String normalizado = valor.trim().toUpperCase(Locale.ROOT);
+		for (Genero genero : Genero.values()) {
+			if (genero.name().equals(normalizado)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Converte o texto do formulario no objetivo, ou {@code null} se invalido. */
+	private static Objetivo objetivoDe(String valor) {
+		if (valor == null) {
+			return null;
+		}
+		String normalizado = valor.trim().toUpperCase(Locale.ROOT);
+		for (Objetivo objetivo : Objetivo.values()) {
+			if (objetivo.name().equals(normalizado)) {
+				return objetivo;
+			}
+		}
+		return null;
+	}
+
+	private static boolean experienciaValida(String valor) {
+		String normalizado = valor.trim().toUpperCase(Locale.ROOT);
+		for (Experiencia experiencia : Experiencia.values()) {
+			if (experiencia.name().equals(normalizado)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean contatoValido(String valor) {
+		String normalizado = valor.trim().toUpperCase(Locale.ROOT);
+		for (Contato contato : Contato.values()) {
+			if (contato.name().equals(normalizado)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Confere se a opcao enviada existe na lista do formulario. Valores vazios
+	 * e desconhecidos viram mensagem de erro em vez de excecao.
+	 */
+	private void validarOpcao(String campo, String valor, Predicate<String> permitido,
+			Map<String, String> erros) {
+		if (valor == null || valor.isBlank() || !permitido.test(valor)) {
+			erros.put(campo, "Escolha uma das opcoes disponiveis.");
+		}
+	}
+
+	/**
+	 * Pontua cada arte conforme preferencia e objetivo e devolve a melhor,
+	 * com as demais como alternativas.
+	 *
+	 * @throws NoSuchElementException se o catalogo estiver vazio, o que
+	 *         significaria que nao ha arte para recomendar
+	 * @throws IllegalArgumentException se o objetivo for desconhecido
+	 */
 	public Resultado recomendar(PerfilRecomendacao perfil) {
+		List<MartialArt> artes = martialArtService.listarTodas();
+		if (artes.isEmpty()) {
+			throw new NoSuchElementException("O catalogo de artes esta vazio.");
+		}
+
 		Map<String, Integer> pontos = new LinkedHashMap<>();
-		for (MartialArt arte : martialArtService.listarTodas()) {
+		for (MartialArt arte : artes) {
 			pontos.put(arte.slug(), 0);
 		}
 
-		switch (perfil.getPreferencia()) {
-		case "CHUTES" -> adicionar(pontos, "taekwondo", 5);
-		case "GOLPES_VARIADOS" -> adicionar(pontos, "muay-thai", 5);
-		case "ATAQUE_AGRESSIVO" -> adicionar(pontos, "muay-thai", 5);
-		case "DEFESA_CONTROLE" -> adicionar(pontos, "jiu-jitsu", 5);
-		case "PROJECOES" -> adicionar(pontos, "judo", 5);
-		case "LUTA_NO_SOLO" -> adicionar(pontos, "jiu-jitsu", 5);
-		default -> {
-		}
-		}
+		aplicarPreferencia(perfil, pontos);
+		aplicarObjetivo(perfil, pontos);
 
-		switch (perfil.getObjetivo()) {
-		case "DEFESA_PESSOAL" -> adicionar(pontos, 1, "judo", "karate", "jiu-jitsu", "muay-thai");
-		case "CONDICIONAMENTO" -> adicionar(pontos, 2, "taekwondo", "muay-thai", "boxe");
-		case "DISCIPLINA" -> adicionar(pontos, 2, "judo", "karate", "taekwondo");
-		case "COMPETICAO" -> adicionar(pontos, 1,
-				"judo", "karate", "taekwondo", "jiu-jitsu", "muay-thai", "boxe");
-		default -> throw new IllegalArgumentException("Objetivo de recomendacao invalido.");
-		}
-
-		List<MartialArt> classificacao = martialArtService.listarTodas().stream()
+		List<MartialArt> classificacao = artes.stream()
 				.sorted(Comparator.<MartialArt>comparingInt(arte -> pontos.get(arte.slug()))
 						.reversed()
 						.thenComparing(MartialArt::nome))
@@ -90,21 +141,25 @@ public class RecomendacaoService {
 				pontos.get(principal.slug()), observacoes(perfil));
 	}
 
-	private void validarOpcao(String campo, String valor, Set<String> permitidos,
-			Map<String, String> erros) {
-		if (valor == null || !permitidos.contains(valor)) {
-			erros.put(campo, "Escolha uma das opcoes disponiveis.");
+	private void aplicarPreferencia(PerfilRecomendacao perfil, Map<String, Integer> pontos) {
+		Preferencia preferencia = Preferencia.de(perfil.getPreferencia());
+		if (preferencia.getArteFavorita() != null) {
+			adicionar(pontos, preferencia.getArteFavorita(), preferencia.getPontos());
+		}
+	}
+
+	private void aplicarObjetivo(PerfilRecomendacao perfil, Map<String, Integer> pontos) {
+		Objetivo objetivo = objetivoDe(perfil.getObjetivo());
+		if (objetivo == null) {
+			throw new IllegalArgumentException("Objetivo de recomendacao invalido.");
+		}
+		for (String slug : objetivo.getArtes()) {
+			adicionar(pontos, slug, objetivo.getPontos());
 		}
 	}
 
 	private void adicionar(Map<String, Integer> pontos, String slug, int valor) {
 		pontos.computeIfPresent(slug, (chave, atual) -> atual + valor);
-	}
-
-	private void adicionar(Map<String, Integer> pontos, int valor, String... slugs) {
-		for (String slug : slugs) {
-			adicionar(pontos, slug, valor);
-		}
 	}
 
 	private List<String> observacoes(PerfilRecomendacao perfil) {
@@ -117,14 +172,14 @@ public class RecomendacaoService {
 		}
 		observacoes.add("Altura e peso nao determinam a arte ideal; informe esses dados ao instrutor para orientar pareamento e adaptacoes.");
 		observacoes.add("Genero nao altera a pontuacao: escolha uma turma e um ambiente em que voce se sinta acolhido.");
-		if ("INICIANTE".equals(perfil.getExperiencia())) {
+		if (Experiencia.INICIANTE == Experiencia.de(perfil.getExperiencia())) {
 			observacoes.add("Como iniciante, priorize uma aula experimental com fundamentos e acompanhamento proximo.");
-		} else if ("AVANCADO".equals(perfil.getExperiencia())) {
+		} else if (Experiencia.AVANCADO == Experiencia.de(perfil.getExperiencia())) {
 			observacoes.add("Considere assistir a uma aula e conversar com o professor sobre seu nivel e objetivos tecnicos.");
 		}
-		if ("LEVE".equals(perfil.getContato())) {
+		if (Contato.LEVE == Contato.de(perfil.getContato())) {
 			observacoes.add("Voce prefere contato leve; confirme com a academia como controla o contato nos treinos.");
-		} else if ("INTENSO".equals(perfil.getContato())) {
+		} else if (Contato.INTENSO == Contato.de(perfil.getContato())) {
 			observacoes.add("Treinos intensos variam por academia; confirme a progressao e as medidas de seguranca da turma.");
 		}
 		if (perfil.isPossuiRestricao()) {

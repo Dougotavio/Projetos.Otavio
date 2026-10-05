@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -102,6 +104,51 @@ class DemoApplicationTests {
 		assertThat(controller.detalhe("inexistente", new ExtendedModelMap(), response))
 				.isEqualTo("erro/404");
 		assertThat(response.getStatus()).isEqualTo(404);
+	}
+
+	@Test
+	void disciplinaInvalidaRespondeComStatus404() {
+		MartialArtController controller = new MartialArtController(service);
+		ExtendedModelMap model = new ExtendedModelMap();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+
+		assertThat(controller.porDisciplina("INVALIDA", model, response)).isEqualTo("erro/404");
+		assertThat(response.getStatus()).isEqualTo(404);
+		assertThat(model).doesNotContainKey("artes");
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "STRIKING", "striking", "  Striking  " })
+	void disciplinaValidaAceitaVariacoesDeCaixa(String valor) {
+		MartialArtController controller = new MartialArtController(service);
+		ExtendedModelMap model = new ExtendedModelMap();
+
+		assertThat(controller.porDisciplina(valor, model, new MockHttpServletResponse()))
+				.isEqualTo("lista");
+		assertThat(model.get("disciplina")).isEqualTo(Disciplina.STRIKING);
+	}
+
+	@Test
+	void paginaInicialESobreUsamOTotalDoService() {
+		MartialArtController controller = new MartialArtController(service);
+		ExtendedModelMap model = new ExtendedModelMap();
+
+		assertThat(controller.home(model)).isEqualTo("home");
+		assertThat(model.get("total")).isEqualTo(service.totalDeArtes());
+
+		ExtendedModelMap modelSobre = new ExtendedModelMap();
+		assertThat(controller.sobre(modelSobre)).isEqualTo("sobre");
+		assertThat(modelSobre.get("total")).isEqualTo(service.totalDeArtes());
+	}
+
+	@Test
+	void serviceForneceTodasAsArtesExcetoAInformada() {
+		MartialArt arte = service.buscarPorSlug("judo").orElseThrow();
+
+		List<MartialArt> outras = service.outras(arte);
+
+		assertThat(outras).hasSize(service.totalDeArtes() - 1);
+		assertThat(outras).extracting(MartialArt::slug).doesNotContain("judo");
 	}
 
 	@Test

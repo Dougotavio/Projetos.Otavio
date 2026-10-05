@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/comum :: head(${arte.nome} + ' - Treino')}"></head>
+<head th:replace="~{fragments/comum :: head(${arte.nome} + ' - Treino', 'Plano de treino de ' + ${arte.nome} + ': tecnicas, CONDICIONAMENTO,LESOES e MATERIAL necessarios para comecar.')}"></head>
 
 <body>
 
@@ -16,6 +16,7 @@
 
 	<section class="treino-hero" th:if="${treinoComVisual}">
 		<img class="treino-hero-imagem" th:src="${treinoImagemBase + 'hero.jpg'}"
+				th:srcset="${treinoImagemBase + 'hero-2x.jpg 2x'}"
 			th:alt="'Imagem de ' + ${arte.nome} + ' para o roteiro de treino'">
 		<div class="treino-hero-conteudo">
 			<a class="treino-voltar" th:href="@{'/artes/' + ${arte.slug}}"
@@ -49,16 +50,19 @@
 	<section class="treino-galeria" th:if="${treinoComVisual}">
 		<figure>
 			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'tecnica.jpg' : treinoImagemBase + 'aula-1.jpg'}"
+				th:srcset="${arte.slug == 'muay-thai' ? treinoImagemBase + 'tecnica-2x.jpg 2x' : treinoImagemBase + 'aula-1-2x.jpg 2x'}"
 				th:alt="'Fundamentos de ' + ${arte.nome}" loading="lazy">
 			<figcaption>Fundamentos</figcaption>
 		</figure>
 		<figure>
 			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'sparring.jpg' : treinoImagemBase + 'aula-2.jpg'}"
+				th:srcset="${arte.slug == 'muay-thai' ? treinoImagemBase + 'sparring-2x.jpg 2x' : treinoImagemBase + 'aula-2-2x.jpg 2x'}"
 				th:alt="'Prática técnica de ' + ${arte.nome}" loading="lazy">
 			<figcaption>Técnica</figcaption>
 		</figure>
 		<figure>
 			<img th:src="${arte.slug == 'muay-thai' ? treinoImagemBase + 'condicionamento.jpg' : treinoImagemBase + 'aula-3.jpg'}"
+				th:srcset="${arte.slug == 'muay-thai' ? treinoImagemBase + 'condicionamento-2x.jpg 2x' : treinoImagemBase + 'aula-3-2x.jpg 2x'}"
 				th:alt="'Treino guiado de ' + ${arte.nome}" loading="lazy">
 			<figcaption>Prática guiada</figcaption>
 		</figure>

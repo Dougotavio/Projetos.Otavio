@@ -2966,6 +2966,261 @@ body:has(.portal-page) .marca strong {
 	gap: 18px;
 }
 
+/* Simulacao de duelo: placar com as duas artes lado a lado. */
+.duelo-placar {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: stretch;
+	gap: 18px;
+	margin-bottom: 26px;
+}
+
+.cartao-lado {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.cartao-lado .link-mais {
+	justify-content: center;
+}
+
+.cartao-lado.duelo-vencedor {
+	border-color: rgba(78, 168, 122, 0.75);
+	box-shadow: 0 12px 30px rgba(78, 168, 122, 0.16);
+}
+
+.duelo-centro {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 132px;
+	padding: 0 6px;
+	text-align: center;
+}
+
+.duelo-versus {
+	font-size: 1.6rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: var(--destaque);
+}
+
+.duelo-vencedor-rotulo {
+	font-size: 0.82rem;
+	line-height: 1.35;
+	color: var(--texto-suave);
+}
+
+.duelo-pontos {
+	margin-top: 6px;
+	font-size: 0.9rem;
+	color: var(--texto-suave);
+}
+
+.duelo-pontos strong {
+	display: block;
+	font-size: 1.9rem;
+	line-height: 1.1;
+	color: var(--texto);
+}
+
+.duelo-vencedor .duelo-pontos strong {
+	color: var(--forte);
+}
+
+.aviso-simulacao {
+	margin: 0 0 24px;
+	padding: 16px 18px;
+	border: 1px solid var(--borda);
+	border-left: 4px solid var(--destaque);
+	border-radius: 8px;
+	background: var(--superficie);
+	color: var(--texto-suave);
+}
+
+/* Mapa de academias: lista ao lado do Leaflet. */
+.mapa-linha {
+	display: grid;
+	grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+	gap: 18px;
+	align-items: start;
+}
+
+.lista-academias {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-height: 520px;
+	overflow-y: auto;
+}
+
+.item-academia {
+	padding: 14px 16px;
+	border: 1px solid var(--borda);
+	border-radius: 8px;
+	background: var(--superficie);
+}
+
+.item-academia h3 {
+	margin: 0 0 4px;
+	font-size: 1rem;
+	color: var(--texto);
+}
+
+.item-academia .origem {
+	margin: 0 0 8px;
+	font-size: 0.82rem;
+	color: var(--texto-suave);
+}
+
+.item-academia .mini-resumo {
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.mapa {
+	height: 520px;
+	border: 1px solid var(--borda);
+	border-radius: 8px;
+	background: #111418;
+}
+
+/* Leaflet traz tema claro por padrao; ajusta para o fundo escuro do site. */
+.mapa .leaflet-tile-pane {
+	filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9) saturate(0.7);
+}
+
+.mapa .leaflet-container {
+	background: #111418;
+	font-family: inherit;
+}
+
+/* Filtros do mapa: cidade em largura total, modalidades em badges. */
+.campo-cidade {
+	max-width: 360px;
+	margin-bottom: 20px;
+}
+
+.filtro-artes {
+	border: 1px solid var(--borda);
+	border-radius: 8px;
+	padding: 16px 18px;
+	margin: 0 0 20px;
+}
+
+.filtro-artes legend {
+	padding: 0 6px;
+	font-weight: 600;
+	color: var(--texto);
+}
+
+.filtro-artes .ajuda-campo {
+	margin: 0 0 12px;
+	font-size: 0.82rem;
+	color: var(--texto-suave);
+}
+
+.grade-filtros {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+/* Badge clicavel: o input fica invisivel e o label e o alvo do clique. */
+.badge-filtro {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 9px 15px;
+	border: 1px solid var(--borda);
+	border-radius: 999px;
+	background: var(--superficie);
+	color: var(--texto-suave);
+	font-size: 0.88rem;
+	font-weight: 500;
+	cursor: pointer;
+	user-select: none;
+	transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.badge-filtro:hover {
+	border-color: rgba(237, 28, 46, 0.6);
+	color: var(--texto);
+}
+
+.badge-filtro input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.badge-filtro:has(input:focus-visible) {
+	outline: 2px solid var(--destaque);
+	outline-offset: 2px;
+}
+
+.badge-filtro:has(input:checked),
+.badge-filtro.badge-ativo {
+	border-color: var(--destaque);
+	background: rgba(237, 28, 46, 0.14);
+	color: var(--texto);
+}
+
+/* Ponto marcador antes do nome, preenchido quando a arte esta marcada. */
+.badge-filtro span::before {
+	content: "";
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 8px;
+	border-radius: 50%;
+	background: var(--borda);
+	vertical-align: middle;
+}
+
+.badge-filtro:has(input:checked) span::before,
+.badge-filtro.badge-ativo span::before {
+	background: var(--destaque);
+}
+
+.acoes-filtros {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+}
+
+.acoes-filtros .botao-enviar {
+	margin-top: 0;
+}
+
+/* O botao-secundario tem margin-left herdado da regra geral; aqui o
+	 espaçamento vem do gap do container. */
+.acoes-filtros .botao-secundario {
+	margin-left: 0;
+}
+
+.aviso-exemplo {
+	border-left: 4px solid #e0a33e;
+}
+
+.aviso-exemplo h2 {
+	color: #e0a33e;
+}
+
 .portal-arte-card {
 	overflow: hidden;
 	padding: 0 0 20px;
@@ -3269,6 +3524,50 @@ main :is(
 
 	.portal-artes-grade {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	/* Em telas estreitas o placar empilha, com a arte vencedora no topo. */
+	.duelo-placar {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 14px;
+	}
+
+	.duelo-centro {
+		flex-direction: row;
+		justify-content: center;
+		gap: 12px;
+		min-width: 0;
+		padding: 6px 0;
+	}
+
+	.duelo-placar .cartao-lado.duelo-vencedor {
+		order: -1;
+	}
+
+	/* No celular o mapa fica abaixo da lista e ocupa a largura toda. */
+	.mapa-linha {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.mapa {
+		height: 380px;
+	}
+
+	.lista-academias {
+		max-height: 320px;
+	}
+
+	.campo-cidade {
+		max-width: none;
+	}
+
+	.grade-filtros {
+		gap: 8px;
+	}
+
+	.badge-filtro {
+		padding: 8px 13px;
+		font-size: 0.84rem;
 	}
 }
 

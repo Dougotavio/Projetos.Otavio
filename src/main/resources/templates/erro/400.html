@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/comum :: head('Dados invalidos', 'Os dados enviados nao sao validos. Revise o formulario e tente novamente.')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/comum :: cabecalho}"></header>
+
+<main class="container">
+	<section class="cabecalho-pagina">
+		<h1>400</h1>
+		<p class="subtitulo" th:text="${mensagem} ?: 'Os dados enviados nao sao validos.'">Dados invalidos.</p>
+		<a class="botao" th:href="@{/}">Voltar para o inicio</a>
+	</section>
+</main>
+
+<footer th:replace="~{fragments/comum :: rodape}"></footer>
+
+</body>
+
+</html>

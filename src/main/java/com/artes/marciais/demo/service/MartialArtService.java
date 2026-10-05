@@ -60,4 +60,22 @@ public class MartialArtService {
 				.max()
 				.orElse(0);
 	}
+
+	/**
+	 * Quantidade de artes no catalogo, usada nas paginas inicial e sobre.
+	 * Fica aqui para que o controller nao precise conhecer o tamanho da lista.
+	 */
+	public int totalDeArtes() {
+		return repository.findAll().size();
+	}
+
+	/**
+	 * Todas as artes exceto a informada, para o bloco de "outras artes" da
+	 * pagina de detalhe.
+	 */
+	public List<MartialArt> outras(MartialArt atual) {
+		return repository.findAll().stream()
+				.filter(arte -> !arte.slug().equals(atual.slug()))
+				.toList();
+	}
 }

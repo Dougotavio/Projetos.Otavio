@@ -1,7 +1,9 @@
 package com.artes.marciais.demo.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,38 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.artes.marciais.demo.model.Contato;
+import com.artes.marciais.demo.model.Experiencia;
+import com.artes.marciais.demo.model.Genero;
+import com.artes.marciais.demo.model.Objetivo;
 import com.artes.marciais.demo.model.PerfilRecomendacao;
+import com.artes.marciais.demo.model.Preferencia;
 import com.artes.marciais.demo.service.RecomendacaoService;
 
 @Controller
 public class RecomendacaoController {
-
-	private static final List<Opcao> GENEROS = List.of(
-			new Opcao("PREFIRO_NAO_INFORMAR", "Prefiro nao informar"),
-			new Opcao("MULHER", "Mulher"),
-			new Opcao("HOMEM", "Homem"),
-			new Opcao("NAO_BINARIO", "Nao binario"));
-	private static final List<Opcao> OBJETIVOS = List.of(
-			new Opcao("DEFESA_PESSOAL", "Aprender defesa pessoal"),
-			new Opcao("CONDICIONAMENTO", "Melhorar condicionamento fisico"),
-			new Opcao("DISCIPLINA", "Desenvolver disciplina e foco"),
-			new Opcao("COMPETICAO", "Preparar-me para competir"));
-	private static final List<Opcao> PREFERENCIAS = List.of(
-			new Opcao("SEM_PREFERENCIA", "Ainda nao tenho preferencia"),
-			new Opcao("CHUTES", "Gosto de chutes e movimentacao"),
-			new Opcao("GOLPES_VARIADOS", "Quero combinar punhos, chutes, joelhos e cotovelos"),
-			new Opcao("ATAQUE_AGRESSIVO", "Prefiro tecnicas mais agressivas e diretas"),
-			new Opcao("DEFESA_CONTROLE", "Prefiro evitar confronto, priorizando controle e imobilizacoes"),
-			new Opcao("PROJECOES", "Tenho interesse em projecoes e quedas"),
-			new Opcao("LUTA_NO_SOLO", "Prefiro controle e tecnicas no chao"));
-	private static final List<Opcao> EXPERIENCIAS = List.of(
-			new Opcao("INICIANTE", "Estou comecando agora"),
-			new Opcao("INTERMEDIARIO", "Ja pratiquei por algum tempo"),
-			new Opcao("AVANCADO", "Tenho experiencia avancada"));
-	private static final List<Opcao> CONTATOS = List.of(
-			new Opcao("LEVE", "Prefiro contato leve"),
-			new Opcao("MODERADO", "Aceito contato moderado"),
-			new Opcao("INTENSO", "Aceito treinos de contato intenso"));
 
 	private final RecomendacaoService recomendacaoService;
 
@@ -68,12 +48,26 @@ public class RecomendacaoController {
 		return "recomendacao";
 	}
 
+	/**
+	 * Opcoes do formulario derivadas dos enums, para que rotulo e valor nao
+	 * fiquem duplicados em relacao as regras de pontuacao do service.
+	 */
 	private void adicionarOpcoes(Model model) {
-		model.addAttribute("generos", GENEROS);
-		model.addAttribute("objetivos", OBJETIVOS);
-		model.addAttribute("preferencias", PREFERENCIAS);
-		model.addAttribute("experiencias", EXPERIENCIAS);
-		model.addAttribute("contatos", CONTATOS);
+		model.addAttribute("generos", opcoes(Genero.values(), Genero::getRotulo));
+		model.addAttribute("objetivos", opcoes(Objetivo.values(), Objetivo::getRotulo));
+		model.addAttribute("preferencias", opcoes(Preferencia.values(), Preferencia::getRotulo));
+		model.addAttribute("experiencias", opcoes(Experiencia.values(), Experiencia::getRotulo));
+		model.addAttribute("contatos", opcoes(Contato.values(), Contato::getRotulo));
+	}
+
+	/**
+	 * Monta as opcoes do formulario a partir de um enum, usando o nome da
+	 * constante como valor enviado e {@code rotulo} como texto exibido.
+	 */
+	private static <T extends Enum<T>> List<Opcao> opcoes(T[] valores, Function<T, String> rotulo) {
+		return Arrays.stream(valores)
+				.map(valor -> new Opcao(valor.name(), rotulo.apply(valor)))
+				.toList();
 	}
 
 	public record Opcao(String valor, String rotulo) {

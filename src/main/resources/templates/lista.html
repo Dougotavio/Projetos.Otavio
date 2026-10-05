@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/comum :: head('Artes')}"></head>
+<head th:replace="~{fragments/comum :: head('Artes', 'Todas as artes marciais do catalogo em ordem cronologica, com resumo, disciplina dominante e analise completa de cada uma.')}"></head>
 
 <body>
 
@@ -30,7 +30,9 @@
 			th:classappend="${arte.slug == 'boxe'} ? ' cartao-inglaterra portal-arte-card' : ' portal-arte-card'">
 			<a class="portal-arte-imagem" th:href="@{'/artes/' + ${arte.slug}}">
 				<img th:src="@{'/images/home/' + ${arte.slug} + '.jpg'}"
-					th:alt="'Praticantes de ' + ${arte.nome}" loading="lazy" decoding="async">
+					th:srcset="'/images/home/' + ${arte.slug} + '-2x.jpg 2x'"
+					th:alt="'Praticantes de ' + ${arte.nome}" width="400" height="356"
+					loading="lazy" decoding="async">
 			</a>
 			<div class="cartao-topo">
 				<span class="icone-arte" role="img" th:aria-label="'Simbolo de ' + ${arte.nome}"
