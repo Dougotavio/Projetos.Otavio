@@ -96,6 +96,50 @@
 		<button class="botao botao-enviar" type="submit">Ver minha recomendacao</button>
 	</form>
 
+	<section class="bloco fontes-recomendacao">
+		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">📚</span> Fontes e referencias</h2>
+		<p class="texto">
+			Este questionario e a sugestao apresentada sao baseados em orientacoes de orgaos de saude
+			e seguranca no esporte. As recomendacoes servem como ponto de partida para uma conversa
+			com o instrutor, nao como avaliacao medica.
+		</p>
+		<ul class="fontes-lista">
+			<li>
+				<strong>American College of Sports Medicine (ACSM)</strong> —
+				triagem de pre-participacao (<em>preparticipation screening</em>) e padroes para espacos de atividade fisica,
+				considerando historico de saude, condicoes medicas, sintomas e caracteristicas da modalidade.
+				<a href="https://acsm.org/education-resources/books/preparticipation-physical-evaluation-monograph/"
+					target="_blank" rel="noopener noreferrer">Preparticipation Physical Evaluation<span aria-hidden="true"> ↗</span></a>
+			</li>
+			<li>
+				<strong>American Academy of Pediatrics (AAP)</strong> —
+				seguranca e progressao no treinamento de artes marciais, priorizando tecnica e fundamentos
+				antes do sparring, com supervisao e progressao conforme as habilidades do aluno.
+				<a href="https://www.healthychildren.org/English/healthy-living/sports/Pages/Martial-Arts.aspx"
+					target="_blank" rel="noopener noreferrer">Martial Arts for Kids: A Parent's Guide<span aria-hidden="true"> ↗</span></a>
+			</li>
+			<li>
+				<strong>Centers for Disease Control and Prevention (CDC)</strong> —
+				prevencao, identificacao e retorno seguro ao esporte apos concussao
+				(<em>HEADS UP</em>). Sintomas de concussao exigem afastamento imediato e liberacao por profissional de saude.
+				<a href="https://www.cdc.gov/heads-up/response/index.html"
+					target="_blank" rel="noopener noreferrer">Responding to a Sports-related Concussion<span aria-hidden="true"> ↗</span></a>
+			</li>
+			<li>
+				<strong>World Health Organization (WHO/OMS)</strong> —
+				recomendacoes de atividade fisica por faixa etaria e orientacao de progressao gradual
+				para quem esta comecando.
+				<a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+					target="_blank" rel="noopener noreferrer">Physical activity fact sheet<span aria-hidden="true"> ↗</span></a>
+			</li>
+		</ul>
+		<p class="ajuda-campo aviso-privacidade">
+			Seus dados sao usados exclusivamente para gerar esta recomendacao e nao sao armazenados.
+			Este projeto tem fins educativos e nao substitui a orientacao de um instrutor qualificado
+			nem uma avaliacao medica.
+		</p>
+	</section>
+
 	<section class="bloco resultado-recomendacao" th:if="${resultado != null}">
 		<h2 class="secao-titulo"><span class="icone-secao" aria-hidden="true">✦</span> Sua sugestao para experimentar</h2>
 		<article class="cartao cartao-recomendado">
